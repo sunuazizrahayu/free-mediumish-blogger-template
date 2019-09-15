@@ -14,7 +14,6 @@
 			<title><data:blog.pageName/></title>
 		</b:if>
 	</b:if>
-
 	<meta content='blogger' name='generator'/>
 	<link expr:href='data:blog.homepageUrl + &quot;favicon.ico&quot;' rel='icon' type='image/x-icon'/>
 	<link expr:href='data:blog.url' rel='canonical'/>
@@ -58,19 +57,133 @@
 	<meta content='kode id fb admin' property='fb:admins'/>
 	<meta content='kode id profil admin' property='fb:profile_id'/>
 
+<!-- Bootstrap core CSS -->
+<link href='https://raw.githack.com/sunuazizrahayu/free-mediumish-blogger-template/master/mediumish-html/assets/css/bootstrap.min.css' rel='stylesheet'/>
 
+<!-- Fonts -->
+<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'/>
+<link href='https://fonts.googleapis.com/css?family=Righteous' rel='stylesheet'/>
 
-
+<!-- Custom styles for this template -->
+<link href='https://raw.githack.com/sunuazizrahayu/free-mediumish-blogger-template/master/mediumish-html/assets/css/mediumish.css' rel='stylesheet'/>
 
 &lt;style&gt;
-&lt;!-- /*<b:skin><![CDATA[
-CSS Style Layout Here*/]]></b:skin>
+&lt;!-- /*<b:skin><![CDATA[*/
+/*
+PLEASE DONT REMOVE THIS CREDIT
+-----------------------------------------------
+Original Themes Information: 
+Name		: Mediumish - A Medium style template by WowThemes.net
+Link		: https://www.wowthemes.net/mediumish-free-bootstrap-4-0-html-template-medium-styled/
+
+Convert into Blogger Version:
+Name		: Mediumish Blogger Template
+Version		: 0.1
+Last Update	: 15 September 2019
+Init by		: Sunu Aziz Rahayu
+Link		: https://www.kangsunu.web.id
+Repository	: https://github.com/sunuazizrahayu/free-mediumish-blogger-template
+----------------------------------------------- */
+body#layout {
+width: 100% !important;
+max-width: 100% !important;
+}
+#layout #top-social-search {
+width: 100% !important;
+max-width: 100% !important;
+min-width: 100% !important;
+}
+]]></b:skin>
+
 <style>
 /* CSS Style Skin Blog Here */
 </style>
 </head>
 
 <body expr:class='data:blog.pageType' itemscope='itemscope' itemtype='http://schema.org/WebPage'>
+<header>
+<b:section class='header' id='header' maxwidgets='2' showaddelement='yes'>
+  <b:widget id='Header1' locked='false' title='Mediumish Blogger (Header)' type='Header'>
+    <b:widget-settings>
+      <b:widget-setting name='displayUrl'/>
+      <b:widget-setting name='displayHeight'>0</b:widget-setting>
+      <b:widget-setting name='sectionWidth'>-1</b:widget-setting>
+      <b:widget-setting name='useImage'>false</b:widget-setting>
+      <b:widget-setting name='shrinkToFit'>false</b:widget-setting>
+      <b:widget-setting name='imagePlacement'>BEHIND</b:widget-setting>
+      <b:widget-setting name='displayWidth'>0</b:widget-setting>
+    </b:widget-settings>
+    <b:includable id='main'>
+
+  <b:if cond='data:useImage'>
+    <b:if cond='data:imagePlacement == &quot;BEHIND&quot;'>
+      <!--
+      Show image as background to text. You can't really calculate the width
+      reliably in JS because margins are not taken into account by any of
+      clientWidth, offsetWidth or scrollWidth, so we don't force a minimum
+      width if the user is using shrink to fit.
+      This results in a margin-width's worth of pixels being cropped. If the
+      user is not using shrink to fit then we expand the header.
+      -->
+      <b:if cond='data:mobile'>
+        <div id='header-inner'>
+          <div class='titlewrapper' style='background: transparent'>
+            <h1 class='title' style='background: transparent; border-width: 0px'>
+              <b:include name='title'/>
+            </h1>
+          </div>
+          <b:include name='description'/>
+        </div>
+      <b:else/>
+        <div expr:style='&quot;background-image: url(\&quot;&quot; + data:sourceUrl + &quot;\&quot;); &quot;                      + &quot;background-position: &quot;                      + data:backgroundPositionStyleStr + &quot;; &quot;                      + data:widthStyleStr                      + &quot;min-height: &quot; + data:height                      + &quot;_height: &quot; + data:height                      + &quot;background-repeat: no-repeat; &quot;' id='header-inner'>
+          <div class='titlewrapper' style='background: transparent'>
+            <h1 class='title' style='background: transparent; border-width: 0px'>
+              <b:include name='title'/>
+            </h1>
+          </div>
+          <b:include name='description'/>
+        </div>
+      </b:if>
+    <b:else/>
+      <!--Show the image only-->
+      <div id='header-inner'>
+        <a expr:href='data:blog.homepageUrl' style='display: block'>
+          <img expr:alt='data:title' expr:height='data:height' expr:id='data:widget.instanceId + &quot;_headerimg&quot;' expr:src='data:sourceUrl' expr:width='data:width' style='display: block'/>
+        </a>
+        <!--Show the description-->
+        <b:if cond='data:imagePlacement == &quot;BEFORE_DESCRIPTION&quot;'>
+          <b:include name='description'/>
+        </b:if>
+      </div>
+    </b:if>
+  <b:else/>
+    <!--No header image -->
+    <div id='header-inner'>
+      <div class='titlewrapper'>
+        <h1 class='title'>
+          <b:include name='title'/>
+        </h1>
+      </div>
+      <b:include name='description'/>
+    </div>
+  </b:if>
+</b:includable>
+    <b:includable id='description'>
+  <div class='descriptionwrapper'>
+    <p class='description'><span><data:description/></span></p>
+  </div>
+</b:includable>
+    <b:includable id='title'>
+  <b:tag cond='data:blog.url != data:blog.homepageUrl' expr:href='data:blog.homepageUrl' name='a'>
+    <data:title/>
+  </b:tag>
+</b:includable>
+  </b:widget>
+</b:section>
+  </header>
+
+
+
 	<b:if cond='data:blog.pageType == &quot;error_page&quot;'>
 		<style scoped='scoped' type='text/css'>
 			CSS Style Error Page Here
@@ -80,24 +193,9 @@ CSS Style Layout Here*/]]></b:skin>
 	<b:if cond='data:blog.pageType != &quot;error_page&quot;'>
 		<div class='content-wrapper'>
 			<div id='outer-wrapper'>
-				<header id='header-wrapper' itemscope='itemscope' itemtype='http://schema.org/WPHeader'>
-					<div style='clear:both;'/>
-				</header>
-				<nav id='cssmenu' itemscope='itemscope' itemtype='http://schema.org/SiteNavigationElement'>
-					<ul>
-						<li><a href='/' itemprop='url' title='Home'><span itemprop='name'>Home</span></a></li>
-						<li><a href='#' itemprop='url' title='Daftar Isi'><span itemprop='name'>Daftar Isi</span></a></li>
-						<li class='has-sub'><a href='#' title='About This Blog'><span>About This Blog</span></a>
-							<ul>
-								<li><a href='#' itemprop='url' title='About'><span itemprop='name'>About</span></a></li>
-								<li><a href='#' itemprop='url' title='Contact'><span itemprop='name'>Contact</span></a></li>
-								<li class='last'><a href='#' itemprop='url' title='Privacy'><span itemprop='name'>Privacy</span></a></li>
-							</ul>
-						</li>
-						<li><a href='#' itemprop='url' title='Forum'><span itemprop='name'>Forum</span></a></li>
-					</ul>
-				</nav>
-				<main id='main-wrapper' itemprop='mainContentOfPage' itemscope='itemscope' itemtype='http://schema.org/Blog'>
+
+				
+				<main id='main-wrapper' itemprop='mainEntity' itemscope='itemscope' itemtype='http://schema.org/Blog'>
 					<b:section class='main' id='main' showaddelement='no'>
 <b:widget id='Blog1' locked='true' title='Posting Blog' type='Blog' version='1'>
   <b:widget-settings>
@@ -915,12 +1013,31 @@ CSS Style Layout Here*/]]></b:skin>
 			<!-- end content-wrapper -->
 		</div>
 		<!-- end outer-wrapper -->
-		<footer id='footer-wrapper' itemscope='itemscope' itemtype='http://schema.org/WPFooter'>
-			<div class='credit'>
-				Copyright &#169; 2016.
-				<a class='sitename' expr:href='data:blog.homepageUrl' expr:title='data:blog.title'><data:blog.title/></a> - All Rights Reserved
-			</div>
-		</footer>
 	</b:if>
-	&lt;!--</body>--&gt;&lt;/body&gt;
+
+
+<!-- Begin Footer
+================================================== -->
+<div class='container'>
+	<footer class='footer' itemscope='itemscope' itemtype='http://schema.org/WPFooter'>
+		<p class='pull-left'>
+			Copyright &amp;copy; 2019 <data:blog.title/>
+		</p>
+		<p class='pull-right'>
+			Mediumish Blogger by <a href='https://www.kangsunu.web.id' target='_blank'>Kang Sunu</a>
+		</p>
+		<div class='clearfix'/>
+	</footer>
+</div>
+<!-- End Footer
+================================================== -->
+
+
+<!-- JQuery -->
+<script src='https://raw.githack.com/sunuazizrahayu/free-mediumish-blogger-template/master/mediumish-html/assets/js/jquery.min.js'/>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js'/>
+<script src='https://raw.githack.com/sunuazizrahayu/free-mediumish-blogger-template/master/mediumish-html/assets/js/bootstrap.min.js'/>
+<script src='https://raw.githack.com/sunuazizrahayu/free-mediumish-blogger-template/master/mediumish-html/assets/js/ie10-viewport-bug-workaround.js'/>
+&lt;!--</body>--&gt;
+&lt;/body&gt;
 </HTML>
