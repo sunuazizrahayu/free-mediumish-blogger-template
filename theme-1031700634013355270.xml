@@ -101,86 +101,50 @@ min-width: 100% !important;
 </head>
 
 <body expr:class='data:blog.pageType' itemscope='itemscope' itemtype='http://schema.org/WebPage'>
-<header>
-<b:section class='header' id='header' maxwidgets='2' showaddelement='yes'>
-  <b:widget id='Header1' locked='false' title='Mediumish Blogger (Header)' type='Header'>
+&lt;!--
+<b:section class='navigation-section' id='navigation-section' maxwidgets='1' showaddelement='no'>
+  <b:widget id='LinkList1' locked='false' title='Navigation' type='LinkList' version='1'>
     <b:widget-settings>
-      <b:widget-setting name='displayUrl'/>
-      <b:widget-setting name='displayHeight'>0</b:widget-setting>
-      <b:widget-setting name='sectionWidth'>-1</b:widget-setting>
-      <b:widget-setting name='useImage'>false</b:widget-setting>
-      <b:widget-setting name='shrinkToFit'>false</b:widget-setting>
-      <b:widget-setting name='imagePlacement'>BEHIND</b:widget-setting>
-      <b:widget-setting name='displayWidth'>0</b:widget-setting>
+      <b:widget-setting name='sorting'>NONE</b:widget-setting>
+      <b:widget-setting name='text-1'>Post</b:widget-setting>
+      <b:widget-setting name='link-1'>/p/post.html</b:widget-setting>
+      <b:widget-setting name='text-0'>Home</b:widget-setting>
+      <b:widget-setting name='link-2'>https://facebook.com/sunuazizrahayu</b:widget-setting>
+      <b:widget-setting name='link-0'>/</b:widget-setting>
+      <b:widget-setting name='text-2'>Author</b:widget-setting>
     </b:widget-settings>
-    <b:includable id='main'>
+    <b:includable id='main'>--&gt;
 
-  <b:if cond='data:useImage'>
-    <b:if cond='data:imagePlacement == &quot;BEHIND&quot;'>
-      <!--
-      Show image as background to text. You can't really calculate the width
-      reliably in JS because margins are not taken into account by any of
-      clientWidth, offsetWidth or scrollWidth, so we don't force a minimum
-      width if the user is using shrink to fit.
-      This results in a margin-width's worth of pixels being cropped. If the
-      user is not using shrink to fit then we expand the header.
-      -->
-      <b:if cond='data:mobile'>
-        <div id='header-inner'>
-          <div class='titlewrapper' style='background: transparent'>
-            <h1 class='title' style='background: transparent; border-width: 0px'>
-              <b:include name='title'/>
-            </h1>
-          </div>
-          <b:include name='description'/>
-        </div>
-      <b:else/>
-        <div expr:style='&quot;background-image: url(\&quot;&quot; + data:sourceUrl + &quot;\&quot;); &quot;                      + &quot;background-position: &quot;                      + data:backgroundPositionStyleStr + &quot;; &quot;                      + data:widthStyleStr                      + &quot;min-height: &quot; + data:height                      + &quot;_height: &quot; + data:height                      + &quot;background-repeat: no-repeat; &quot;' id='header-inner'>
-          <div class='titlewrapper' style='background: transparent'>
-            <h1 class='title' style='background: transparent; border-width: 0px'>
-              <b:include name='title'/>
-            </h1>
-          </div>
-          <b:include name='description'/>
-        </div>
-      </b:if>
-    <b:else/>
-      <!--Show the image only-->
-      <div id='header-inner'>
-        <a expr:href='data:blog.homepageUrl' style='display: block'>
-          <img expr:alt='data:title' expr:height='data:height' expr:id='data:widget.instanceId + &quot;_headerimg&quot;' expr:src='data:sourceUrl' expr:width='data:width' style='display: block'/>
-        </a>
-        <!--Show the description-->
-        <b:if cond='data:imagePlacement == &quot;BEFORE_DESCRIPTION&quot;'>
-          <b:include name='description'/>
-        </b:if>
-      </div>
-    </b:if>
-  <b:else/>
-    <!--No header image -->
-    <div id='header-inner'>
-      <div class='titlewrapper'>
-        <h1 class='title'>
-          <b:include name='title'/>
-        </h1>
-      </div>
-      <b:include name='description'/>
-    </div>
-  </b:if>
-</b:includable>
-    <b:includable id='description'>
-  <div class='descriptionwrapper'>
-    <p class='description'><span><data:description/></span></p>
-  </div>
-</b:includable>
-    <b:includable id='title'>
-  <b:tag cond='data:blog.url != data:blog.homepageUrl' expr:href='data:blog.homepageUrl' name='a'>
-    <data:title/>
-  </b:tag>
-</b:includable>
+<!-- Begin Nav
+================================================== -->
+<nav class='navbar navbar-toggleable-md navbar-light bg-white fixed-top mediumnavigation'>
+	<button aria-controls='navbarsExampleDefault' aria-expanded='false' aria-label='Toggle navigation' class='navbar-toggler navbar-toggler-right' data-target='#navbarsExampleDefault' data-toggle='collapse' type='button'>
+<span class='navbar-toggler-icon'/></button>
+	<div class='container'>
+		<!-- Begin Logo -->
+		<a class='navbar-brand' expr:href='data:blog.homepageUrl'><img alt='logo' expr:title='data:blog.title' src='https://raw.githack.com/sunuazizrahayu/free-mediumish-blogger-template/master/mediumish-html/assets/img/logo.png'/></a>
+		<!-- End Logo -->
+		<div class='collapse navbar-collapse' id='navbarsExampleDefault'>
+			<!-- Begin Menu -->
+			<ul class='navbar-nav ml-auto'>
+				<b:loop values='data:links' var='link'><li class='nav-item'><a class='nav-link' expr:href='data:link.target'><data:link.name/></a></li></b:loop>
+			</ul>
+			<!-- End Menu -->
+			<!-- Begin Search -->
+			<form class='form-inline my-2 my-lg-0'>
+				<input class='form-control mr-sm-2' placeholder='Search' type='text'/>
+				<span class='search-icon'><svg class='svgIcon-use' height='25' viewbox='0 0 25 25' width='25'><path d='M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z'/></svg></span>
+			</form>
+			<!-- End Search -->
+		</div>
+	</div>
+</nav>
+<!-- End Nav
+================================================== -->
+&lt;!--	</b:includable>
   </b:widget>
-</b:section>
-  </header>
+</b:section>--&gt;
+
 
 
 
@@ -197,6 +161,54 @@ min-width: 100% !important;
 				
 				<main id='main-wrapper' itemprop='mainEntity' itemscope='itemscope' itemtype='http://schema.org/Blog'>
 					<b:section class='main' id='main' showaddelement='no'>
+<b:widget id='PopularPosts1' locked='false' title='Postingan Populer' type='PopularPosts'>
+  <b:widget-settings>
+    <b:widget-setting name='numItemsToShow'>10</b:widget-setting>
+    <b:widget-setting name='showThumbnails'>true</b:widget-setting>
+    <b:widget-setting name='showSnippets'>true</b:widget-setting>
+    <b:widget-setting name='timeRange'>LAST_YEAR</b:widget-setting>
+  </b:widget-settings>
+  <b:includable id='main'>
+  <b:if cond='data:title != &quot;&quot;'><h2><data:title/></h2></b:if>
+  <div class='widget-content popular-posts'>
+    <ul>
+      <b:loop values='data:posts' var='post'>
+      <li>
+        <b:if cond='!data:showThumbnails'>
+          <b:if cond='!data:showSnippets'>
+            <!-- (1) No snippet/thumbnail -->
+            <a expr:href='data:post.href'><data:post.title/></a>
+          <b:else/>
+            <!-- (2) Show only snippets -->
+            <div class='item-title'><a expr:href='data:post.href'><data:post.title/></a></div>
+            <div class='item-snippet'><data:post.snippet/></div>
+          </b:if>
+        <b:else/>
+          <!-- (3) Show only thumbnails or (4) Snippets and thumbnails. -->
+          <div expr:class='data:showSnippets ? &quot;item-content&quot; : &quot;item-thumbnail-only&quot;'>
+            <b:if cond='data:post.featuredImage.isResizable or data:post.thumbnail'>
+              <div class='item-thumbnail'>
+                <a expr:href='data:post.href' target='_blank'>
+                  <b:with value='data:post.featuredImage.isResizable                                  ? resizeImage(data:post.featuredImage, 72, &quot;1:1&quot;)                                  : data:post.thumbnail' var='image'>
+                    <img alt='' border='0' expr:src='data:image'/>
+                  </b:with>
+                </a>
+              </div>
+            </b:if>
+            <div class='item-title'><a expr:href='data:post.href'><data:post.title/></a></div>
+            <b:if cond='data:showSnippets'>
+              <div class='item-snippet'><data:post.snippet/></div>
+            </b:if>
+          </div>
+          <div style='clear: both;'/>
+        </b:if>
+      </li>
+      </b:loop>
+    </ul>
+    <b:include name='quickedit'/>
+  </div>
+</b:includable>
+</b:widget>
 <b:widget id='Blog1' locked='true' title='Posting Blog' type='Blog' version='1'>
   <b:widget-settings>
     <b:widget-setting name='showDateHeader'>true</b:widget-setting>
@@ -1006,6 +1018,7 @@ min-width: 100% !important;
 </b:section>
 				</main>
 				<aside id='sidebar-right' itemscope='itemscope' itemtype='http://schema.org/WPSideBar'>
+<b:section class='sidebar' id='sidebar' showaddelement='yes'/>
 				</aside>
 				<!-- spacer for skins that want sidebar and main to be the same height-->
 				<div class='clear'/>
