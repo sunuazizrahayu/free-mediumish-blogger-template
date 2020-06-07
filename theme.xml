@@ -10,6 +10,7 @@
     <!-- Fonts -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" />
 
 <b:if cond='!data:view.isLayoutMode'>
 <style>
@@ -22,8 +23,8 @@
  * 
  * Convert into Blogger Version:
  * Name         : Mediumish Blogger Template
- * Version      : 0.3
- * Last Update  : 2 June 2020
+ * Version      : 0.3.2
+ * Last Update  : 7 June 2020
  * Init by      : Sunu Aziz Rahayu
  * Link         : https://www.kangsunu.web.id
  * Repository   : https://github.com/sunuazizrahayu/free-mediumish-blogger-template
@@ -49,8 +50,8 @@
  * 
  * Convert into Blogger Version:
  * Name         : Mediumish Blogger Template
- * Version      : 0.3
- * Last Update  : 2 June 2020
+ * Version      : 0.3.2
+ * Last Update  : 7 June 2020
  * Init by      : Sunu Aziz Rahayu
  * Link         : https://www.kangsunu.web.id
  * Repository   : https://github.com/sunuazizrahayu/free-mediumish-blogger-template
@@ -458,6 +459,151 @@ Main
 .original-form-container .comment-cancel-reply {
   display: none;
 }
+
+/* Comment form Reply */
+
+.original-form-container .comment-form .comment-form-title{
+  display: inline-block;
+}
+
+.reply-form-container .comment-form{
+  margin-top: -30px;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+}
+
+.reply-form-container .comment-form .comment-form-title{
+  display: none;
+}
+
+/* Pager
+------------------------------------------------- */
+
+/*
+<Group description="(Main) Blog posts: Pager">
+  Pager link
+  ----------------------
+
+  <Variable name="pager.link.padding.y"
+      description="Pager link padding Y"
+      type="length"
+      min="0"
+      max="100px"
+      default="4px"
+      value="4px"/>
+  <Variable name="pager.link.padding.x"
+      description="Pager link padding X"
+      type="length"
+      min="0"
+      max="100px"
+      default="8px"
+      value="8px"/>
+  <Variable name="pager.link.color"
+      description="Pager link color"
+      type="color"
+      default="#555555"
+      value="#555555"/>
+  <Variable name="pager.link.hover.color"
+      description="Pager link hover color"
+      type="color"
+      default="#555555"
+      value="#555555"/>
+
+  <Variable name="pager.link.background.color"
+      description="Pager link background color"
+      type="color"
+      default="#ffffff"
+      value="#ffffff"/>
+  <Variable name="pager.link.hover.background.color"
+      description="Pager link hover background color"
+      type="color"
+      default="#f7f7f7"
+      value="#f7f7f7"/>
+  <Variable name="pager.link.border.width"
+      description="Pager link border width"
+      type="length"
+      min="0"
+      max="100px"
+      default="1px"
+      value="1px"/>
+  <Variable name="pager.link.border.color"
+      description="Pager link border color"
+      type="color"
+      default="#dddddd"
+      value="#dddddd"/>
+  <Variable name="pager.link.hover.border.color"
+      description="Pager link hover border color"
+      type="color"
+      default="#dddddd"
+      value="#dddddd"/>
+  <Variable name="pager.link.border.radius"
+      description="Pager link border radius"
+      type="length"
+      min="0"
+      max="100px"
+      default="4px"
+      value="4px"/>
+</Group>
+*/
+
+/**
+ * Pager base class
+ */
+
+.pager {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.pager:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * Pager link
+ */
+
+.pager-link {
+  position: relative;
+  display: block;
+  padding: $(pager.link.padding.y) $(pager.link.padding.x);
+  color: $(pager.link.color);
+  line-height: 1.25;
+  background-color: $(pager.link.background.color);
+  border: $(pager.link.border.width) solid $(pager.link.border.color);
+  border-radius: $(pager.link.border.radius);
+}
+
+.pager-link:hover,
+.pager-link:focus {
+  color: $(pager.link.hover.color);
+  text-decoration: none;
+  background-color: $(pager.link.hover.background.color);
+  border-color: $(pager.link.hover.border.color);
+}
+
+.pager-link.disabled {
+  opacity: .65;
+  pointer-events: none;
+}
+
+.pager-link.pager-home {
+  margin: 0 10px;
+}
+
+/*
+=================================================
+Sidebar
+=================================================
+*/
+
+/*
+=================================================
+Feature
+=================================================
+*/
 ]]>
 </b:skin>
 </b:if>
@@ -544,6 +690,14 @@ body#layout .sidebar {
             </p>
           </div>
         </header>
+      </div>
+    </b:if>
+
+    <b:if cond="data:view.isHomepage">
+      <div class="container">
+        <aside class="sidebar2" id="sidebar2">
+          <b:section class="b-section-feature" id="b-section-feature" name="Feature (Homepage Only)"> </b:section>
+        </aside>
       </div>
     </b:if>
 
@@ -995,6 +1149,32 @@ body#layout .sidebar {
 
               <div class="hideshare"></div>
 
+              <b:comment> ################################################## Pager ##################################################</b:comment>
+
+              <b:if cond="data:posts.notEmpty and !data:view.isPage">
+                <nav id="pager">
+                  <b:attr expr:value='data:view.isPost ? "pager col-md-8 col-md-offset-2 col-xs-12" : "pager"' name="class" />
+                  <b:attr expr:value='data:view.isPost ? "margin: 0 auto" : ""' name="style" />
+
+                  <a class="pager-link pager-newer" role="button">
+                    <b:attr expr:value='data:newerPageUrl ? data:newerPageUrl : "javascript:void(0);"' name="href" />
+                    <b:class cond="!data:newerPageUrl" name="disabled" />
+                    <data:messages.newer />
+                  </a>
+
+                  <a class="pager-link pager-home" role="button">
+                    <b:attr expr:value="data:blog.homepageUrl" name="href" />
+                    <data:messages.home />
+                  </a>
+
+                  <a class="pager-link pager-older" role="button">
+                    <b:attr expr:value='data:olderPageUrl ? data:olderPageUrl : "javascript:void(0);"' name="href" />
+                    <b:class cond="!data:olderPageUrl" name="disabled" />
+                    <data:messages.older />
+                  </a>
+                </nav>
+              </b:if>
+
               <b:if cond="data:view.isPost">
                 <!-- Begin Related
   ================================================== -->
@@ -1117,11 +1297,18 @@ body#layout .sidebar {
                                   c += `<span class="meta-footer-thumb">
                 <img class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Sal"/>
                 </span>`;
-                                  c += `<span class="author-meta">
-                <span class="post-name"><a href="author.html">Sal</a></span><br>
-                <span class="post-date">22 July 2017</span><span class="dot"></span><span class="post-read">6 min read</span>
+                                  c +=
+                                    `<span class="author-meta">
+                <span class="post-name"><a href="` +
+                                    v +
+                                    `">` +
+                                    x[q].author[0].name.$t +
+                                    `</a></span><br>
+                <span class="post-date">` +
+                                    new Date(x[q].published.$t).toLocaleString() +
+                                    `</span><span class="dot"></span><span class="post-read">6 min read</span>
                 </span>`;
-                                  c += `<span class="post-read-more"><a href="post.html" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewBox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>`;
+                                  c += `<span class="post-read-more"><a href="` + v + `" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewBox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>`;
                                   c += '</div></div>';
                                   c += '</div>';
                                   c += '</div></div>';
@@ -1399,29 +1586,6 @@ function replyTo(id) {
                   </b:loop>
                 </div>
               </b:if>
-
-              <b:comment> ################################################## Pager ##################################################</b:comment>
-
-              <b:if cond="data:posts.notEmpty and !data:view.isPage">
-                <nav class="pager" id="pager">
-                  <a class="pager-link pager-newer" role="button">
-                    <b:attr expr:value='data:newerPageUrl ? data:newerPageUrl : "javascript:void(0);"' name="href" />
-                    <b:class cond="!data:newerPageUrl" name="disabled" />
-                    <data:messages.newer />
-                  </a>
-
-                  <a class="pager-link pager-home" role="button">
-                    <b:attr expr:value="data:blog.homepageUrl" name="href" />
-                    <data:messages.home />
-                  </a>
-
-                  <a class="pager-link pager-older" role="button">
-                    <b:attr expr:value='data:olderPageUrl ? data:olderPageUrl : "javascript:void(0);"' name="href" />
-                    <b:class cond="!data:olderPageUrl" name="disabled" />
-                    <data:messages.older />
-                  </a>
-                </nav>
-              </b:if>
             </b:includable>
 
             <b:includable id="aboutPostAuthor" />
@@ -1465,49 +1629,7 @@ function replyTo(id) {
     <div class="container">
       <div class="content-row">
         <aside class="sidebar" id="sidebar">
-          <b:section class="b-section-sidebar" id="b-section-sidebar" name="Sidebar section">
-            <b:widget id="BlogSearch1" locked="true" title="Search This Blog" type="BlogSearch" visible="true">
-              <b:includable id="main">
-                <b:include name="widget-title" />
-                <b:include name="content" />
-              </b:includable>
-              <b:includable id="content">
-                <div class="widget-content">
-                  <b:include name="searchForm" />
-                </div>
-              </b:includable>
-              <b:includable id="searchForm">
-                <form class="custom-search-form" expr:action="data:blog.searchUrl">
-                  <div class="search-form-row">
-                    <div class="search-form-col">
-                      <b:include name="urlParamsAsFormInput" />
-                      <input autocomplete="off" class="search-form-input" expr:aria-label="data:messages.search" expr:placeholder="data:messages.search" name="q" type="search" />
-                    </div>
-                    <div class="search-form-col-auto">
-                      <b:include name="searchSubmit" />
-                    </div>
-                  </div>
-                </form>
-              </b:includable>
-              <b:includable id="searchSubmit">
-                <button class="search-form-submit" type="submit"><data:messages.search /></button>
-              </b:includable>
-            </b:widget>
-
-            <b:widget id="HTML2" locked="false" title="HTML gadget" type="HTML" visible="true">
-              <b:widget-settings>
-                <b:widget-setting name="content">
-                  <![CDATA[ <p>Hello, world!</p> ]]>
-                </b:widget-setting>
-              </b:widget-settings>
-              <b:includable id="main">
-                <b:include name="widget-title" />
-                <div class="widget-content">
-                  <data:content />
-                </div>
-              </b:includable>
-            </b:widget>
-          </b:section>
+          <b:section class="b-section-sidebar" id="b-section-sidebar" name="Sidebar section"> </b:section>
         </aside>
       </div>
     </div>
@@ -1515,45 +1637,7 @@ function replyTo(id) {
     <div class="container">
       <b:if cond='data:widgets any (w =&gt; w.sectionId == "b-section-footer")'>
         <div class="content-row">
-          <b:section class="b-section-footer" id="b-section-footer" maxwidgets="2" name="Footer section" showaddelement="no">
-            <b:widget id="LinkList1" locked="true" title="Footer nav" type="LinkList" visible="true">
-              <b:widget-settings>
-                <b:widget-setting name="shownum" />
-                <b:widget-setting name="sorting">NONE</b:widget-setting>
-                <b:widget-setting name="text-0">Blogger</b:widget-setting>
-                <b:widget-setting name="link-0">https://blogger.com/</b:widget-setting>
-                <b:widget-setting name="text-1">GitHub</b:widget-setting>
-                <b:widget-setting name="link-1">https://github.com/bloggerpack/bloggerpack</b:widget-setting>
-              </b:widget-settings>
-              <b:includable id="main">
-                <b:include name="content" />
-              </b:includable>
-              <b:includable id="content">
-                <ul class="footer-nav-list">
-                  <b:loop values="data:links" var="link">
-                    <li class="footer-nav-item">
-                      <a class="footer-nav-link" expr:href="data:link.target">
-                        <data:link.name />
-                      </a>
-                    </li>
-                  </b:loop>
-                </ul>
-              </b:includable>
-            </b:widget>
-
-            <b:widget id="HTML1" locked="true" title="Footer text" type="HTML" visible="true">
-              <b:widget-settings>
-                <b:widget-setting name="content">
-                  <![CDATA[ <p>© &lt;YEAR&gt; &lt;COPYRIGHT HOLDER&gt;. <a href="https://blogger.com/">Powered by Blogger</a>.</p> ]]>
-                </b:widget-setting>
-              </b:widget-settings>
-              <b:includable id="main">
-                <div class="footer-description">
-                  <data:content />
-                </div>
-              </b:includable>
-            </b:widget>
-          </b:section>
+          <b:section class="b-section-footer" id="b-section-footer" maxwidgets="2" name="Footer section" showaddelement="yes"> </b:section>
         </div>
       </b:if>
     </div>
@@ -1650,8 +1734,8 @@ if(n||(n=new h(this,o),t(this).data(a,n)),"string"==typeof e){if(void 0===n[e])t
  * 
  * Convert into Blogger Version:
  * Name         : Mediumish Blogger Template
- * Version      : 0.3
- * Last Update  : 2 June 2020
+ * Version      : 0.3.2
+ * Last Update  : 7 June 2020
  * Init by      : Sunu Aziz Rahayu
  * Link         : https://www.kangsunu.web.id
  * Repository   : https://github.com/sunuazizrahayu/free-mediumish-blogger-template
