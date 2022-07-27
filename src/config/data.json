@@ -1,0 +1,20 @@
+{
+  "theme": {
+    "name": "Mediumish Blogger Template",
+    "version": "0.3.2",
+    "date": "7 June 2020",
+    "homepage": "https://free-mediumish.blogspot.com/",
+    "author": {
+      "name": "Sunu Aziz Rahayu",
+      "url": "https://www.kangsunu.web.id"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/sunuazizrahayu/free-mediumish-blogger-template"
+    },
+    "license": {
+      "type": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  }
+}

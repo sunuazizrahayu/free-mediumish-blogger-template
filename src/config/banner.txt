@@ -1,0 +1,15 @@
+/*!
+ * PLEASE DON'T REMOVE THIS CREDIT
+ * -----------------------------------------------
+ * Original Themes Information: 
+ * Name          : Mediumish - A Medium style template by WowThemes.net
+ * URL           : https://www.wowthemes.net/mediumish-free-bootstrap-4-0-html-template-medium-styled/
+ * 
+ * Convert into Blogger Version:
+ * Name          : <%= data.theme.name %>
+ * Version       : <%= data.theme.version %>
+ * Last Update   : <%= data.theme.date %>
+ * Init by       : <%= data.theme.author.name %>
+ * Theme URL     : <%= data.theme.repository.url %>
+ * Theme Preview : <%= data.theme.homepage %>
+ * ----------------------------------------------- */

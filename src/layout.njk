@@ -1,0 +1,224 @@
+{% parent %}
+
+::template::
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+  <head>
+    <meta content='width=device-width, initial-scale=1, shrink-to-fit=no' name='viewport'/>
+    <title><data:view.title.escaped/></title>
+    <b:include data='blog' name='all-head-content'/>
+    <b:include data='blog' name='google-analytics'/>
+
+
+    <!-- Fonts -->
+    <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'/>
+    <link href='https://fonts.googleapis.com/css?family=Righteous' rel='stylesheet'/>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet'/>
+
+
+    {% asset type="style", "@dist/css/style.css" %}
+    
+    {% asset type="skin", "@dist/skin/skin.css" %}
+
+    {% asset %}
+    <b:if cond='data:view.isLayoutMode'>
+    <b:template-skin>
+    <![CDATA[
+    body#layout .container::after,
+    body#layout .section::after { /* `<b:section>` */
+      display: block;
+      clear: both;
+      content: "";
+    }
+    body#layout .main,
+    body#layout .sidebar {
+      float: left;
+    }
+    body#layout .main {
+      width: 100%;
+    }
+    body#layout .sidebar {
+      width: 100%;
+    }
+    ]]>
+    </b:template-skin>
+    </b:if>
+    {% endasset %}
+
+    {% asset %}
+    <b:if cond='data:skin.override and !data:view.isLayoutMode'>
+    <style>
+    <data:skin.override/>
+    </style>
+    </b:if>
+    {% endasset %}
+
+  </head>
+  <body>
+
+
+<!-- Begin Nav
+================================================== -->
+<nav class="navbar navbar-toggleable-md navbar-light bg-white fixed-top mediumnavigation">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="container">
+    <!-- Begin Logo -->
+    <a class='navbar-brand' expr:href='data:blog.homepageUrl'>
+    <img alt='logo' expr:title='data:blog.title' src='https://raw.githack.com/sunuazizrahayu/free-mediumish-blogger-template/master/mediumish-html/assets/img/logo.png'/>
+    </a>
+    <!-- End Logo -->
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <!-- Begin Menu -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+        <a class="nav-link" href="index.html">Stories <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="post.html">Post</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="author.html">Author</a>
+        </li>
+      </ul>
+      <!-- End Menu -->
+      <!-- Begin Search -->
+      <form class="form-inline my-2 my-lg-0" expr:action='data:blog.homepageUrl + "search"'>
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" name="q">
+        <span class="search-icon"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z"></path></svg></span>
+        <input name='max-results' type='hidden' value='9'/>
+      </form>
+      <!-- End Search -->
+    </div>
+  </div>
+</nav>
+<!-- End Nav
+================================================== -->
+
+<b:if cond='!data:view.isPost'>
+<div class="container">
+
+  <header class='header' id='header'>
+    {% block header %}{% endblock %}
+  </header>
+
+</div>
+</b:if>
+
+
+<b:if cond='data:view.isHomepage'>
+  <div class='container'>
+    <aside class='sidebar2' id='sidebar2'>
+      {% block sidebar2 %}{% endblock %}
+    </aside>
+  </div>
+</b:if>
+
+
+<div class="container">
+  <!-- Begin List Posts
+  ================================================== -->
+  
+  <main class='main' id='main'>
+    {% block main %}{% endblock %}
+  </main>
+
+</div><!--/.container-->
+
+
+<div class='container'>
+
+  <div class='content-row'>
+    <aside class='sidebar' id='sidebar'>
+      {% block sidebar %}{% endblock %}
+    </aside>
+  </div>
+
+</div>
+
+<div class='container'>
+
+  <b:if cond='data:widgets any (w =&gt; w.sectionId == "b-section-footer")'>
+      <div class='content-row'>
+        {% block footer %}{% endblock %}
+      </div>
+  </b:if>
+
+</div>
+    
+
+
+
+<div class="container">
+  <!-- Begin Footer
+  ================================================== -->
+  <div class="footer">
+    <p class="pull-left">
+       Copyright &amp;copy; 2020 <data:blog.title/>
+    </p>
+    <p class="pull-right">
+       Mediumish Blogger Theme by <a target="_blank" href="https://www.kangsunu.com">Kang Sunu</a>
+    </p>
+    <div class="clearfix">
+    </div>
+  </div>
+  <!-- End Footer
+  ================================================== -->
+</div>
+
+
+
+    {% asset type="script", "@assets/js/jquery.min.js" %}
+    {% asset type="script", "@assets/js/tether.min.js" %}
+    {% asset type="script", "@assets/js/bootstrap.min.js" %}
+    {% asset type="script", "@assets/js/ie10-viewport-bug-workaround.js" %}
+
+    <b:if cond='data:view.isPost or data:view.isPage'>
+    <script>
+    $(function(){
+      var topOfOthDiv = $(".hideshare").offset().top;
+      $(window).scroll(function() {
+          if($(window).scrollTop() > topOfOthDiv) { //scrolled past the other div?
+              $(".share").hide(); //reached the desired point -- show div
+          }
+          else{
+            $(".share").show();
+          }
+      });
+    });
+    </script>
+    </b:if>
+
+    {% asset type="script", "@dist/js/script.js" %}
+  </body>
+</html>
+::endtemplate::
+
+::skin::
+/*
+=================================================
+Layout
+=================================================
+*/
+
+/* Skip navigation
+================================================= */
+
+/* Header
+================================================= */
+
+/* Content
+================================================= */
+
+/**
+ * Grid
+ */
+
+/* Footer
+================================================= */
+::endskin::
+
+{% endparent %}

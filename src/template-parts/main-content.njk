@@ -1,0 +1,1407 @@
+::template::
+<b:section class='b-section-main' id='b-section-main' maxwidgets='1' name='Main section' showaddelement='no'>
+  {#==================================================
+  Blog widget
+  - Breadcrumb
+  - Status message
+  - Posts
+  - Comments
+  - Pager
+  ==================================================#}
+  <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' visible='true'>
+    <b:includable id='main' var='this'>
+
+      <b:comment>
+      ##################################################
+      ### Posts List 
+      ###===============================================
+      ### Homepage | Search (label|query|default) page | Archive page ###</b:comment>
+
+      <b:if cond='data:view.isHomepage or data:view.isSearch or data:view.isArchive'>
+        <section class="recent-posts">
+          <div class="section-title">
+            <h2><span>All Stories</span></h2>
+          </div>          
+          <div class="card-columns listrecent">
+
+
+            <b:if cond='data:posts.notEmpty'>
+              <b:if cond='data:view.isMultipleItems'>
+                <b:loop values='data:posts' var='post'>
+                  <article class='post post-index' expr:id='"post-" + data:post.id'>
+
+                    <div class='card'>
+
+                      <b:comment>=== Featured image ===</b:comment>
+                      <b:with value='800' var='size'>
+                      <b:with value='"16:9"' var='ratio'>
+                        <b:if cond='data:post.featuredImage'>
+                          <div class='post-featured-image'>
+                            <b:if cond='data:post.featuredImage.isYoutube'>
+                              <a expr:href='data:post.link ?: data:post.url'>
+                                <img>
+                                  <!-- src --><b:attr expr:value='data:post.featuredImage.youtubeMaxResDefaultUrl.isResizable ? resizeImage(data:post.featuredImage.youtubeMaxResDefaultUrl, data:size, data:ratio) : data:post.featuredImage.youtubeMaxResDefaultUrl' name='src'/>
+                                  <!-- alt --><b:attr expr:value='data:post.title ? data:post.title : data:messages.image' name='alt'/>
+                                  <b:attr name='b:whitespace' value='remove'/>
+                                  <!-- class --><b:attr value='img-fluid' name='class'/>
+                                </img>
+                              </a>
+                            <b:else/>
+                              <a expr:href='data:post.link ?: data:post.url'>
+                                <img>
+                                  <!-- src --><b:attr expr:value='data:post.featuredImage.isResizable ? resizeImage(data:post.featuredImage, data:size, data:ratio) : data:post.featuredImage' name='src'/>
+                                  <!-- alt --><b:attr expr:value='data:post.title ? data:post.title : data:messages.image' name='alt'/>
+                                  <b:attr name='b:whitespace' value='remove'/>
+                                  <!-- class --><b:attr value='img-fluid' name='class'/>
+                                </img>
+                              </a>
+                            </b:if>
+                          </div>
+                        </b:if>
+                      </b:with>
+                      </b:with>
+
+                      <div class="card-block">
+
+                        <b:comment>=== Title ===</b:comment>
+                        <h2 class='card-title'>
+                          <a expr:href='data:post.link ?: data:post.url'>
+                            <b:eval expr='data:post.title ? data:post.title : data:messages.noTitle'/>
+                          </a>
+                        </h2>
+
+                        <b:comment>=== Snippet ===</b:comment>
+                        <h4 class='card-text'><data:post.snippets.short/></h4>
+
+                        <div class="metafooter">
+                          <div class="wrapfooter">
+
+                            <span class="meta-footer-thumb">
+                              <b:with value='42' var='size'>
+                              <b:with value='"1:1"' var='ratio'>
+                                <b:if cond='data:post.author and data:post.author.authorPhoto'>
+                                  <img>
+                                    <!-- class --><b:class name='post-meta-avatar'/>
+                                    <!-- src --><b:attr expr:value='data:post.author.authorPhoto.image.isResizable ? resizeImage(data:post.author.authorPhoto.image, data:size, data:ratio) : data:post.author.authorPhoto.image' name='src'/>
+                                    <!-- alt --><b:attr expr:value='data:post.author.name' name='alt'/>
+                                    <b:attr name='b:whitespace' value='remove'/>
+                                    <!-- class --><b:attr value='author-thumb' name='class'/>
+                                  </img>
+                                <b:else/><!-- fallback -->
+                                  <svg class='post-meta-avatar author-thumb' viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'>
+                                    <title>icon</title>
+                                    <path fill='#ff5722' d='M 4.4504803e-7,0 H 512 V 512 H 4.4504803e-7 Z'/>
+                                    <path fill='#ffffff' d='m 256.00001,255.99998 c 39.45313,0 71.42854,-27.97852 71.42854,-62.50001 C 327.42855,158.97848 295.4531,131 256.00001,131 c -39.45313,0 -71.42861,27.97848 -71.42861,62.49997 0,34.52149 31.97548,62.50001 71.42861,62.50001 z m 49.99998,15.62502 h -9.31919 c -12.38838,4.98044 -26.17186,7.81248 -40.68079,7.81248 -14.50896,0 -28.23662,-2.83204 -40.68083,-7.81248 H 206 c -41.40624,0 -75,29.39449 -75,65.625 v 20.31251 C 131,370.50195 142.99777,381 157.7857,381 H 354.21425 C 369.00225,381 381,370.50195 381,357.56251 V 337.25 c 0,-36.23051 -33.59374,-65.62504 -75.00001,-65.625 z'/>
+                                  </svg>
+                                </b:if>
+                              </b:with>
+                              </b:with>
+                            </span>
+                            <span class="author-meta">
+                              <b:comment>=== Author name ===</b:comment>
+                              <span class="post-name">
+                                <!--<span><data:messages.by/></span>-->
+                                <b:if cond='data:post.author.profileUrl'>
+                                  <a expr:href='data:post.author.profileUrl'>
+                                    <b:eval expr='data:post.author ? data:post.author.name : "Anonymous"'/>
+                                  </a>
+                                <b:else/><!-- no profileUrl -->
+                                  <span><b:eval expr='data:post.author ? data:post.author.name : "Anonymous"'/></span>
+                                </b:if>
+                              </span>
+
+                              <br/>
+                              <b:comment>=== Date (published) ===</b:comment>
+                              <span class="post-date">
+                                <time expr:datetime='data:post.date.iso8601' expr:title='data:post.date.iso8601'>
+                                  <data:post.date/>
+                                </time>
+                              </span>
+                              <span class="dot"></span>
+
+                              <b:comment>=== Comments link ===</b:comment>
+                              <span class="post-read">
+                                <b:if cond='data:post.allowComments'>
+                                  <a expr:href='data:post.commentsUrl'>
+                                    <b:message name='messages.numberOfComments'>
+                                      <b:param expr:value='data:post.numberOfComments' name='numComments'/>
+                                    </b:message>
+                                  </a>
+                                </b:if>
+                              </span>
+                            </span><!--/.author-meta-->
+                            <span class="post-read-more"><a expr:href="data:post.url" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewbox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>
+
+                          </div><!--/.wrapfooter-->
+                        </div><!--/.metafooter-->
+
+                      </div><!--/.card-block-->
+                    </div><!--/.card-->
+                  </article>
+                </b:loop>
+              </b:if>
+            </b:if>
+
+          </div><!--/.listrecent-->
+
+          <div class="col-md-12 col-xs-12">
+            <b:comment>### Search (label|query|default) page | Archive page ###</b:comment>
+
+            <b:if cond='data:view.isSearch or data:view.isArchive'>
+              <b:if cond='data:posts.empty'>
+                <div class='not-found-message' id='not-found-message' role='alert'>
+                  <data:messages.noResultsFound/>
+                </div>
+              </b:if>
+            </b:if>
+          </div>
+
+        </section><!--/.recent-posts-->
+      </b:if>
+
+
+
+      <b:comment>### Error page ###</b:comment>
+
+      <b:if cond='data:view.isError'>
+        <div class='not-found-message' id='not-found-message' role='alert'>
+          <data:navMessage/>
+        </div>
+      </b:if>
+
+      <b:comment>
+      ##################################################
+      Not found message
+      ##################################################</b:comment>
+
+      <b:comment>### Homepage ###</b:comment>
+
+      <b:if cond='data:view.isHomepage'>
+        <b:if cond='data:posts.empty'>
+          <div class='not-found-message' id='not-found-message' role='alert'>
+            <data:messages.theresNothingHere/>
+          </div>
+        </b:if>
+      </b:if>
+
+
+
+
+      <b:comment>
+      ##################################################
+      Breadcrumb
+      ##################################################
+      <b:if cond='data:view.isPost'>
+        <ol class='breadcrumb' id='breadcrumb'>
+
+          <li class='breadcrumb-item'>
+            <a class='breadcrumb-link' expr:href='data:blog.homepageUrl'>
+              <data:messages.home/>
+            </a>
+          </li>
+
+          <b:comment>### Post page ###</b:comment>
+
+          <b:if cond='data:view.isPost'>
+            <b:loop values='data:posts' var='post'>
+              <li class='breadcrumb-item active'>
+                <span>Post:</span>
+                <span><b:eval expr='data:post.title ? data:post.title : data:messages.noTitle'/></span>
+              </li>
+            </b:loop>
+          </b:if>
+
+          <b:comment>### Static page ###</b:comment>
+
+          <b:if cond='data:view.isPage'>
+            <b:loop values='data:posts' var='post'>
+              <li class='breadcrumb-item active'>
+                <span>Page:</span>
+                <span><b:eval expr='data:post.title ? data:post.title : data:messages.noTitle'/></span>
+              </li>
+            </b:loop>
+          </b:if>
+
+          <b:comment>### Search (label) page ###</b:comment>
+
+          <b:if cond='data:view.isLabelSearch'>
+            <li class='breadcrumb-item'>
+              <a class='breadcrumb-link' expr:href='path(data:blog.homepageUrl, "/search")'>
+                Search
+              </a>
+            </li>
+            <li class='breadcrumb-item active'>
+              <span>Label:</span>
+              <span><data:view.search.label/></span>
+            </li>
+          </b:if>
+
+          <b:comment>### Search (query) page ###</b:comment>
+
+          <b:if cond='data:view.search.query'>
+            <li class='breadcrumb-item'>
+              <a class='breadcrumb-link' expr:href='path(data:blog.homepageUrl, "/search")'>
+                Search
+              </a>
+            </li>
+            <li class='breadcrumb-item active'>
+              <span>Query:</span>
+              <span><data:view.search.query/></span>
+            </li>
+          </b:if>
+
+          <b:comment>### Search (default) page ###</b:comment>
+
+          <b:if cond='data:view.isSearch and !data:view.isLabelSearch and !data:view.search.query'>
+            <li class='breadcrumb-item active'>
+              <span>Search</span>
+            </li>
+          </b:if>
+
+          <b:comment>### Archive page ###</b:comment>
+
+          <b:if cond='data:view.isArchive'>
+            <b:if cond='data:view.archive.month'>
+              <li class='breadcrumb-item'>
+                <a class='breadcrumb-link' expr:href='data:blog.homepageUrl + data:view.archive.year'>
+                  <data:view.archive.year/>
+                </a>
+              </li>
+              <li class='breadcrumb-item active'>
+                <span><data:view.archive.month/></span>
+              </li>
+            <b:else/>
+              <li class='breadcrumb-item active'>
+                <span><data:view.archive.year/></span>
+              </li>
+            </b:if>
+          </b:if>
+
+          <b:comment>### Error page ###</b:comment>
+
+          <b:if cond='data:view.isError'>
+            <li class='breadcrumb-item active'>
+              <span>404</span>
+            </li>
+          </b:if>
+
+        </ol>
+      </b:if>
+      </b:comment>
+
+      <b:comment>### Post page ###</b:comment>
+
+      <b:if cond='data:posts.notEmpty'>
+        <b:if cond='data:view.isPost'>
+          <b:loop values='data:posts' var='post'>
+
+            <div class="row">
+              <!-- Begin Fixed Left Share -->
+              <div class="col-md-2 col-xs-12">
+                <div class="share">
+                  <p>
+                    Share
+                  </p>
+                  <ul>
+                    <li>
+                    <a target="_blank" expr:href='"https://twitter.com/home?status=" + data:post.url'>
+                    <svg class="svgIcon-use" width="29" height="29" viewbox="0 0 29 29"><path d="M21.967 11.8c.018 5.93-4.607 11.18-11.177 11.18-2.172 0-4.25-.62-6.047-1.76l-.268.422-.038.5.186.013.168.012c.3.02.44.032.6.046 2.06-.026 3.95-.686 5.49-1.86l1.12-.85-1.4-.048c-1.57-.055-2.92-1.08-3.36-2.51l-.48.146-.05.5c.22.03.48.05.75.08.48-.02.87-.07 1.25-.15l2.33-.49-2.32-.49c-1.68-.35-2.91-1.83-2.91-3.55 0-.05 0-.01-.01.03l-.49-.1-.25.44c.63.36 1.35.57 2.07.58l1.7.04L7.4 13c-.978-.662-1.59-1.79-1.618-3.047a4.08 4.08 0 0 1 .524-1.8l-.825.07a12.188 12.188 0 0 0 8.81 4.515l.59.033-.06-.59v-.02c-.05-.43-.06-.63-.06-.87a3.617 3.617 0 0 1 6.27-2.45l.2.21.28-.06c1.01-.22 1.94-.59 2.73-1.09l-.75-.56c-.1.36-.04.89.12 1.36.23.68.58 1.13 1.17.85l-.21-.45-.42-.27c-.52.8-1.17 1.48-1.92 2L22 11l.016.28c.013.2.014.35 0 .52v.04zm.998.038c.018-.22.017-.417 0-.66l-.498.034.284.41a8.183 8.183 0 0 0 2.2-2.267l.97-1.48-1.6.755c.17-.08.3-.02.34.03a.914.914 0 0 1-.13-.292c-.1-.297-.13-.64-.1-.766l.36-1.254-1.1.695c-.69.438-1.51.764-2.41.963l.48.15a4.574 4.574 0 0 0-3.38-1.484 4.616 4.616 0 0 0-4.61 4.613c0 .29.02.51.08.984l.01.02.5-.06.03-.5c-3.17-.18-6.1-1.7-8.08-4.15l-.48-.56-.36.64c-.39.69-.62 1.48-.65 2.28.04 1.61.81 3.04 2.06 3.88l.3-.92c-.55-.02-1.11-.17-1.6-.45l-.59-.34-.14.67c-.02.08-.02.16 0 .24-.01 2.12 1.55 4.01 3.69 4.46l.1-.49-.1-.49c-.33.07-.67.12-1.03.14-.18-.02-.43-.05-.64-.07l-.76-.09.23.73c.57 1.84 2.29 3.14 4.28 3.21l-.28-.89a8.252 8.252 0 0 1-4.85 1.66c-.12-.01-.26-.02-.56-.05l-.17-.01-.18-.01L2.53 21l1.694 1.07a12.233 12.233 0 0 0 6.58 1.917c7.156 0 12.2-5.73 12.18-12.18l-.002.04z"></path></svg>
+                    </a>
+                    </li>
+                    <li>
+                    <a target="_blank" expr:href='"https://www.facebook.com/sharer/sharer.php?u="+ data:post.url'>
+                    <svg class="svgIcon-use" width="29" height="29" viewbox="0 0 29 29"><path d="M16.39 23.61v-5.808h1.846a.55.55 0 0 0 .546-.48l.36-2.797a.551.551 0 0 0-.547-.62H16.39V12.67c0-.67.12-.813.828-.813h1.474a.55.55 0 0 0 .55-.55V8.803a.55.55 0 0 0-.477-.545c-.436-.06-1.36-.116-2.22-.116-2.5 0-4.13 1.62-4.13 4.248v1.513H10.56a.551.551 0 0 0-.55.55v2.797c0 .304.248.55.55.55h1.855v5.76c-4.172-.96-7.215-4.7-7.215-9.1 0-5.17 4.17-9.36 9.31-9.36 5.14 0 9.31 4.19 9.31 9.36 0 4.48-3.155 8.27-7.43 9.15M14.51 4C8.76 4 4.1 8.684 4.1 14.46c0 5.162 3.75 9.523 8.778 10.32a.55.55 0 0 0 .637-.543v-6.985a.551.551 0 0 0-.55-.55H11.11v-1.697h1.855a.55.55 0 0 0 .55-.55v-2.063c0-2.02 1.136-3.148 3.03-3.148.567 0 1.156.027 1.597.06v1.453h-.924c-1.363 0-1.93.675-1.93 1.912v1.78c0 .3.247.55.55.55h2.132l-.218 1.69H15.84c-.305 0-.55.24-.55.55v7.02c0 .33.293.59.623.54 5.135-.7 9.007-5.11 9.007-10.36C24.92 8.68 20.26 4 14.51 4"></path></svg>
+                    </a>
+                    </li>
+                  </ul>
+                  <div class="sep">
+                  </div>
+                  <p>
+                    Talk
+                  </p>
+                  <ul>
+                    <li>
+                    <a href="#comments">
+                    <data:post.numberOfComments/>
+                    <br/>
+                    <svg class="svgIcon-use" width="29" height="29" viewbox="0 0 29 29"><path d="M21.27 20.058c1.89-1.826 2.754-4.17 2.754-6.674C24.024 8.21 19.67 4 14.1 4 8.53 4 4 8.21 4 13.384c0 5.175 4.53 9.385 10.1 9.385 1.007 0 2-.14 2.95-.41.285.25.592.49.918.7 1.306.87 2.716 1.31 4.19 1.31.276-.01.494-.14.6-.36a.625.625 0 0 0-.052-.65c-.61-.84-1.042-1.71-1.282-2.58a5.417 5.417 0 0 1-.154-.75zm-3.85 1.324l-.083-.28-.388.12a9.72 9.72 0 0 1-2.85.424c-4.96 0-8.99-3.706-8.99-8.262 0-4.556 4.03-8.263 8.99-8.263 4.95 0 8.77 3.71 8.77 8.27 0 2.25-.75 4.35-2.5 5.92l-.24.21v.32c0 .07 0 .19.02.37.03.29.1.6.19.92.19.7.49 1.4.89 2.08-.93-.14-1.83-.49-2.67-1.06-.34-.22-.88-.48-1.16-.74z"></path></svg>
+                    </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!-- End Fixed Left Share -->
+
+              <!-- Begin Post -->
+              <div class="col-md-8 col-md-offset-2 col-xs-12">
+
+                
+
+                <article class='post post-single' expr:id='"post-" + data:post.id'>
+
+                  <b:comment>=== Meta ===</b:comment>
+                  <div class="mainheading">
+
+                    <!-- Begin Top Meta -->
+                    <div class="row post-top-meta">
+                      <div class="col-md-2">
+                        <!-- Author Photo -->                          
+                        <a expr:href='data:post.author.profileUrl'>
+                          <b:comment>=== Author photo ===</b:comment>
+                          <b:with value='42' var='size'>
+                          <b:with value='"1:1"' var='ratio'>
+                            <b:if cond='data:post.author and data:post.author.authorPhoto'>
+                              <img>
+                                <!-- class --><b:class name='author-thumb'/>
+                                <!-- src --><b:attr expr:value='data:post.author.authorPhoto.image.isResizable ? resizeImage(data:post.author.authorPhoto.image, data:size, data:ratio) : data:post.author.authorPhoto.image' name='src'/>
+                                <!-- alt --><b:attr expr:value='data:post.author.name' name='alt'/>
+                                <b:attr name='b:whitespace' value='remove'/>
+                              </img>
+                            <b:else/><!-- fallback -->
+                              <svg class='author-thumb' viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'>
+                                <title>icon</title>
+                                <path fill='#ff5722' d='M 4.4504803e-7,0 H 512 V 512 H 4.4504803e-7 Z'/>
+                                <path fill='#ffffff' d='m 256.00001,255.99998 c 39.45313,0 71.42854,-27.97852 71.42854,-62.50001 C 327.42855,158.97848 295.4531,131 256.00001,131 c -39.45313,0 -71.42861,27.97848 -71.42861,62.49997 0,34.52149 31.97548,62.50001 71.42861,62.50001 z m 49.99998,15.62502 h -9.31919 c -12.38838,4.98044 -26.17186,7.81248 -40.68079,7.81248 -14.50896,0 -28.23662,-2.83204 -40.68083,-7.81248 H 206 c -41.40624,0 -75,29.39449 -75,65.625 v 20.31251 C 131,370.50195 142.99777,381 157.7857,381 H 354.21425 C 369.00225,381 381,370.50195 381,357.56251 V 337.25 c 0,-36.23051 -33.59374,-65.62504 -75.00001,-65.625 z'/>
+                              </svg>
+                            </b:if>
+                          </b:with>
+                          </b:with>
+                        </a>
+                      </div>
+                      <div class="col-md-10">
+                        <!-- Author Name -->
+                        <b:if cond='data:post.author.profileUrl'>
+                          <a class="link-dark" expr:href='data:post.author.profileUrl'>
+                            <b:eval expr='data:post.author ? data:post.author.name : "Anonymous"'/>
+                          </a>
+                        <b:else/><!-- no profileUrl -->
+                          <span><b:eval expr='data:post.author ? data:post.author.name : "Anonymous"'/></span>
+                        </b:if>
+
+                        <!-- Author Follow -->
+                        <a href="#" class="btn follow">Follow</a>
+
+                        <!-- Author Greeting or Message -->
+                        <span class="author-description">
+                          Founder of WowThemes.net and creator of <b>"Mediumish"</b> theme that you're currently previewing. Developing professional premium themes, templates, plugins, scripts since 2012.
+                        </span>
+                        <span class="post-date">
+                          <time expr:datetime='data:post.date.iso8601' expr:title='data:post.date.iso8601'>
+                            <data:post.date/>
+                          </time>
+                        </span>
+                        <span class="dot"></span>
+                        <span class="post-read">
+                          <b:message name='messages.numberOfComments'>
+                            <b:param expr:value='data:post.numberOfComments' name='numComments'/>
+                          </b:message>
+                        </span>
+                      </div>
+                    </div>
+                    <!-- End Top Menta -->
+
+                    <b:comment>=== Title ===</b:comment>
+                    <h1 class="posttitle"><b:eval expr='data:post.title ? data:post.title : data:messages.noTitle'/></h1>
+
+                  </div><!--./mainheading-->
+
+                  <!-- Begin Featured Image -->
+                  <!--<img class="featured-image img-fluid" src="assets/img/demopic/10.jpg" alt=""/>-->
+
+
+                  <b:comment>=== Body ===</b:comment>
+                  <!-- Begin Post Content -->
+                  <div class="article-post">
+                    <data:post.body/>
+                  </div>
+                  <!-- End Post Content -->
+
+
+
+                  <b:comment>=== Labels ===</b:comment>
+                  <!-- Begin Tags -->
+                  <div class="after-post-tags">
+                    <b:if cond='data:post.labels'>
+                      <ul class="tags">
+                        <b:loop index='i' values='data:post.labels' var='label'>
+                          <li><a expr:href='params(data:label.url, { max-results: "12" })'><data:label.name/></a></li>
+                        </b:loop>
+                      </ul>
+                    </b:if>
+                  </div>
+
+                </article>
+                
+
+              </div>
+              <!-- End Post -->
+            </div><!--/.row-->
+          </b:loop>
+        </b:if>
+      </b:if>
+
+      <b:comment>### Static page ###</b:comment>
+
+      <b:if cond='data:posts.notEmpty'>
+        <b:if cond='data:view.isPage'>
+          <b:loop values='data:posts' var='post'>
+            <article class='post post-single' expr:id='"post-" + data:post.id'>
+
+              <b:comment>=== Title ===</b:comment>
+              <h1 class='post-title-single'>
+                <b:eval expr='data:post.title ? data:post.title : data:messages.noTitle'/>
+              </h1>
+
+              <b:comment>=== Body ===</b:comment>
+              <div class='post-body'>
+                <data:post.body/>
+              </div>
+
+            </article>
+          </b:loop>
+        </b:if>
+      </b:if>
+
+
+<div class="hideshare"></div>
+
+      <b:comment>
+      ##################################################
+      Pager
+      ##################################################</b:comment>
+
+      <b:if cond='data:posts.notEmpty and !data:view.isPage'>
+        <nav id='pager'>
+          <b:attr expr:value='data:view.isPost ? &quot;pager col-md-8 col-md-offset-2 col-xs-12&quot; : &quot;pager&quot;' name='class'/>
+          <b:attr expr:value='data:view.isPost ? &quot;margin: 0 auto&quot; : &quot;&quot;' name='style'/>
+
+          
+          <a class='pager-link pager-newer' role='button'>
+            <b:attr expr:value='data:newerPageUrl ? data:newerPageUrl : "javascript:void(0);"' name='href'/>
+            <b:class cond='!data:newerPageUrl' name='disabled'/>
+            <data:messages.newer/>
+          </a>
+
+          <a class='pager-link pager-home' role='button'>
+            <b:attr expr:value='data:blog.homepageUrl' name='href'/>
+            <data:messages.home/>
+          </a>
+
+          <a class='pager-link pager-older' role='button'>
+            <b:attr expr:value='data:olderPageUrl ? data:olderPageUrl : "javascript:void(0);"' name='href'/>
+            <b:class cond='!data:olderPageUrl' name='disabled'/>
+            <data:messages.older/>
+          </a>
+        </nav>
+      </b:if>
+
+<b:if cond='data:view.isPost'>
+  <!-- Begin Related
+  ================================================== -->
+  <div class="graybg">
+    <div class="container">
+      <div class="row listrecent listrelated" id="related-post"></div>
+
+      <div class="row listrecent listrelated">
+
+
+        <div class='related-postbwrap' id='bpostrelated-post'></div>
+          <script type='text/javascript'>
+             var labelArray = [<b:if cond='data:post.labels'><b:loop values='data:post.labels' var='label'>
+                       &quot;<data:label.name/>&quot;<b:if cond='data:label.isLast != &quot;true&quot;'>,</b:if>
+                   </b:loop></b:if>];
+             var relatedPostConfig = {
+                   homePage: '<data:blog.homepageUrl/>',
+                   widgetTitle: '',
+                   numPosts: 3,
+                   summaryLength: 80,
+                   titleLength: &quot;auto&quot;,
+                   thumbnailSize: 0,
+                   noImage: &quot;https://1.bp.blogspot.com/-4WT5vXNr-nM/XKJ1FLK4oMI/AAAAAAAAOho/I1vD9DlRrrg-_KWNx3axjifQ2mbY3iYTgCLcBGAs/s1600/no-image.png&quot;,
+                   containerId: &quot;related-post&quot;,
+                   newTabLink: false,
+                   moreText: &quot;Read More&quot;,
+                   widgetStyle: 1,
+                   callBack: function() {}
+             };
+          </script>
+          <script type='text/javascript'>
+//<![CDATA[
+/*! Related Post Widget */
+var randomRelatedIndex, showRelatedPost;
+(function(n, m, k) {
+  var d = {
+    widgetTitle: "<h4>Related Posts</h4>",
+    widgetStyle: 1,
+    homePage: "<data:blog.homepageUrl/>",
+    numPosts: 7,
+    summaryLength: 370,
+    titleLength: "auto",
+    thumbnailSize: 72,
+    noImage: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAA3NCSVQICAjb4U/gAAAADElEQVQImWOor68HAAL+AX7vOF2TAAAAAElFTkSuQmCC",
+    containerId: "related-post",
+    newTabLink: false,
+    moreText: "Baca Selengkapnya",
+    callBack: function() {}
+  };
+  for (var f in relatedPostConfig) {
+    d[f] = (relatedPostConfig[f] == "undefined") ? d[f] : relatedPostConfig[f]
+  }
+  var j = function(a) {
+      var b = m.createElement("script");
+      b.type = "text/javascript";
+      b.src = a;
+      k.appendChild(b)
+    },
+    o = function(b, a) {
+      return Math.floor(Math.random() * (a - b + 1)) + b
+    },
+    l = function(a) {
+      var p = a.length,
+        c, b;
+      if (p === 0) {
+        return false
+      }
+      while (--p) {
+        c = Math.floor(Math.random() * (p + 1));
+        b = a[p];
+        a[p] = a[c];
+        a[c] = b
+      }
+      return a
+    },
+    e = (typeof labelArray == "object" && labelArray.length > 0) ? "/-/" + l(labelArray)[0] : "",
+    h = function(b) {
+      var c = b.feed.openSearch$totalResults.$t - d.numPosts,
+        a = o(1, (c > 0 ? c : 1));
+      j(d.homePage.replace(/\/$/, "") + "/feeds/posts/summary" + e + "?alt=json-in-script&orderby=updated&start-index=" + a + "&max-results=" + d.numPosts + "&callback=showRelatedPost")
+    },
+    g = function(z) {
+      var s = document.getElementById(d.containerId),
+        x = l(z.feed.entry),
+        A = d.widgetStyle,
+        c = d.widgetTitle + '<!--<ul class="related-post-style-' + A + '">-->',
+        b = d.newTabLink ? ' target="_blank"' : "",
+        y = '<span style="display:block;clear:both;"></span>',
+        v, t, w, r, u;
+      if (!s) {
+        return
+      }
+      for (var q = 0; q < d.numPosts; q++) {
+        if (q == x.length) {
+          break
+        }
+        t = x[q].title.$t;
+        w = (d.titleLength !== "auto" && d.titleLength < t.length) ? t.substring(0, d.titleLength) + "&hellip;" : t;
+        r = ("media$thumbnail" in x[q] && d.thumbnailSize !== false) ? x[q].media$thumbnail.url.replace(/\/s[0-9]+(\-c)?/, "/s" + d.thumbnailSize + "-c") : d.noImage;
+        u = ("summary" in x[q] && d.summaryLength > 0) ? x[q].summary.$t.replace(/<br ?\/?>/g, " ").replace(/<.*?>/g, "").replace(/[<>]/g, "").substring(0, d.summaryLength) + "&hellip;" : "";
+        for (var p = 0, a = x[q].link.length; p < a; p++) {
+          v = (x[q].link[p].rel == "alternate") ? x[q].link[p].href : "#"
+        }
+        if (A == 1) {
+          c += '<div class="col-md-4"><div class="card">';
+          c += '<a href="' + v + '"><img alt="" class="img-fluid img-thumb" src="' + r + '" title="' + t + '"/></a>';
+          c += '<div class="card-block">';
+          c += '<h2 class="card-title"><a href="' + v + '" title="' + t + '">' + t + '</a></h2>';
+          c += '<div class="metafooter"><div class="wrapfooter">';
+          c += `<span class="meta-footer-thumb">
+                <img class="author-thumb" src="https://www.gravatar.com/avatar/e56154546cf4be74e393c62d1ae9f9d4?s=250&amp;d=mm&amp;r=x" alt="Sal"/>
+                </span>`;
+          c += `<span class="author-meta">
+                <span class="post-name"><a href="`+v+`">`+x[q].author[0].name.$t+`</a></span><br>
+                <span class="post-date">`+new Date(x[q].published.$t).toLocaleString()+`</span><span class="dot"></span><span class="post-read">6 min read</span>
+                </span>`;
+          c += `<span class="post-read-more"><a href="`+v+`" title="Read Story"><svg class="svgIcon-use" width="25" height="25" viewBox="0 0 25 25"><path d="M19 6c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v14.66h.012c.01.103.045.204.12.285a.5.5 0 0 0 .706.03L12.5 16.85l5.662 4.126a.508.508 0 0 0 .708-.03.5.5 0 0 0 .118-.285H19V6zm-6.838 9.97L7 19.636V6c0-.55.45-1 1-1h9c.55 0 1 .45 1 1v13.637l-5.162-3.668a.49.49 0 0 0-.676 0z" fill-rule="evenodd"></path></svg></a></span>`;
+          c += '</div></div>';
+          c += '</div>';
+          c += '</div></div>';
+
+        } else {
+
+          if (A == 2) {
+            c += '<li><img alt="" class="related-post-item-thumbnail" src="' + r + '" width="' + d.thumbnailSize + '" height="' + d.thumbnailSize + '"><a class="related-post-item-title" title="' + t + '" href="' + v + '"' + b + ">" + w + '</a><span class="related-post-item-summary"><span class="related-post-item-summary-text">' + u + '</span> <a href="' + v + '" class="related-post-item-more"' + b + ">" + d.moreText + "</a></span>" + y + "</li>"
+          } else {
+            if (A == 3 || A == 4) {
+              c += '<li class="related-post-item" tabindex="0"><a class="related-post-item-title" href="' + v + '"' + b + '><img alt="" class="related-post-item-thumbnail" src="' + r + '" width="' + d.thumbnailSize + '" height="' + d.thumbnailSize + '"></a><div class="related-post-item-tooltip"><a class="related-post-item-title" title="' + t + '" href="' + v + '"' + b + ">" + w + "</a></div>" + y + "</li>"
+            } else {
+              if (A == 5) {
+                c += '<li class="related-post-item" tabindex="0"><a class="related-post-item-wrapper" href="' + v + '" title="' + t + '"' + b + '><img alt="" class="related-post-item-thumbnail" src="' + r + '" width="' + d.thumbnailSize + '" height="' + d.thumbnailSize + '"><span class="related-post-item-tooltip">' + w + "</span></a>" + y + "</li>"
+              } else {
+                if (A == 6) {
+                  c += '<li><a class="related-post-item-title" title="' + t + '" href="' + v + '"' + b + ">" + w + '</a><div class="related-post-item-tooltip"><img alt="" class="related-post-item-thumbnail" src="' + r + '" width="' + d.thumbnailSize + '" height="' + d.thumbnailSize + '"><span class="related-post-item-summary"><span class="related-post-item-summary-text">' + u + "</span></span>" + y + "</div></li>"
+                } else {
+                  c += '<li><a title="' + t + '" href="' + v + '"' + b + ">" + w + "</a></li>"
+                }
+              }
+            }
+          }
+        }
+
+      }
+      s.innerHTML = c += "<!--</ul>-->" + y;
+      d.callBack()
+    };
+  randomRelatedIndex = h;
+  showRelatedPost = g;
+  j(d.homePage.replace(/\/$/, "") + "/feeds/posts/summary" + e + "?alt=json-in-script&orderby=updated&max-results=0&callback=randomRelatedIndex")
+})(window, document, document.getElementsByTagName("head")[0]);
+//]]>
+          </script>
+
+      </div>
+    </div>
+  </div>
+  <!-- End Related Posts
+  ================================================== -->
+</b:if>
+
+
+      <b:comment>
+      ##################################################
+      Comments
+      ##################################################</b:comment>
+
+      <b:if cond='data:view.isPost or data:view.isPage'>
+        <div class="col-md-8 col-md-offset-2 col-xs-12" style="margin:auto;margin-top:15px;">
+          <b:loop values='data:posts' var='post'>
+            <b:if cond='data:post.allowComments'>
+              <div class='comments' id='comments'>
+
+                <b:comment>=== Title ===</b:comment>
+                <h1 class='comments-title'>
+                  <data:messages.comments/> (<data:post.numberOfComments/>)
+                </h1>
+
+                <b:comment>=== New comments are not allowed ===</b:comment>
+                <b:if cond='!data:post.allowNewComments'>
+                  <div class='comment-warning' role='alert'>
+                    <data:post.noNewCommentsText/>
+                  </div>
+                </b:if>
+
+                <b:comment>=== Comment list ===</b:comment>
+                <b:if cond='data:post.comments.notEmpty'>
+                  <ol class='comment-list'>
+                    <b:loop values='data:post.comments where (c => not c.inReplyTo)' var='comment'>
+                      <li expr:id='data:comment.anchorName'>
+
+                        <div class='comment-block'>
+                          <b:class cond='data:comment.adminClass == data:post.adminClass' name='is-author'/>
+                          <b:comment>=== Comment header ===</b:comment>
+                          <div class='comment-header'>
+                            <b:comment>=== Col 1 ===</b:comment>
+                            <div class='comment-header-col-1'>
+                              <b:comment>=== Comment avatar ===</b:comment>
+                              <b:if cond='data:comment.authorPhoto'>
+                                <img class='comment-avatar' expr:src='resizeImage(data:comment.authorAvatarSrc, 42)' expr:alt='data:comment.author'/>
+                              <b:else/>
+                                <svg class='comment-avatar' viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'>
+                                  <title>icon</title>
+                                  <path fill='#ff5722' d='M 4.4504803e-7,0 H 512 V 512 H 4.4504803e-7 Z'/>
+                                  <path fill='#ffffff' d='m 256.00001,255.99998 c 39.45313,0 71.42854,-27.97852 71.42854,-62.50001 C 327.42855,158.97848 295.4531,131 256.00001,131 c -39.45313,0 -71.42861,27.97848 -71.42861,62.49997 0,34.52149 31.97548,62.50001 71.42861,62.50001 z m 49.99998,15.62502 h -9.31919 c -12.38838,4.98044 -26.17186,7.81248 -40.68079,7.81248 -14.50896,0 -28.23662,-2.83204 -40.68083,-7.81248 H 206 c -41.40624,0 -75,29.39449 -75,65.625 v 20.31251 C 131,370.50195 142.99777,381 157.7857,381 H 354.21425 C 369.00225,381 381,370.50195 381,357.56251 V 337.25 c 0,-36.23051 -33.59374,-65.62504 -75.00001,-65.625 z'/>
+                                </svg>
+                              </b:if>
+                            </div><!-- /.comment-header-col-1 -->
+                            <b:comment>=== Col 2 ===</b:comment>
+                            <div class='comment-header-col-2'>
+                              <b:comment>=== Comment author ===</b:comment>
+                              <div class='comment-author'>
+                                <b:if cond='data:comment.authorUrl'>
+                                  <a expr:href='data:comment.authorUrl'><data:comment.author/></a>
+                                <b:else/>
+                                  <data:comment.author/>
+                                </b:if>
+                                <b:comment>=== Comment author badge ===</b:comment>
+                                <b:if cond='data:comment.adminClass == data:post.adminClass'>
+                                  <span class='comment-author-badge'>Author</span>
+                                </b:if>
+                              </div><!-- /.comment-author -->
+                              <b:comment>=== Comment meta ===</b:comment>
+                              <div class='comment-meta'>
+                                <a expr:href='data:comment.url'>#</a>
+                                <span><data:comment.timestamp/></span>
+                              </div><!-- /.comment-meta -->
+                            </div><!-- /.comment-header-col-2 -->
+                          </div><!-- /.comment-header -->
+                          <b:comment>=== Comment body ===</b:comment>
+                          <div class='comment-body'>
+                            <b:if cond='data:comment.isDeleted'>
+                              <div class='comment-warning' role='alert'>
+                                <data:comment.body/>
+                              </div>
+                            <b:else/>
+                              <div class='comment-text'>
+                                <data:comment.body/>
+                              </div>
+                            </b:if>
+                          </div><!-- /.comment-body -->
+                          <b:comment>=== Comment actions ===</b:comment>
+                          <div class='comment-actions'>
+                            <b:if cond='!data:comment.isDeleted and data:post.allowNewComments'>
+                              <a expr:href='"javascript:replyTo(&amp;quot;" + data:comment.id + "&amp;quot;);"'>Reply</a>
+                              <span>&#183;</span>
+                            </b:if>
+                            <a expr:href='data:comment.deleteUrl'>Delete</a>
+                          </div><!-- /.comment-actions -->
+                        </div><!-- /.comment-block -->
+
+                        <b:comment>=== Reply form container ===</b:comment>
+                        <b:if cond='!data:comment.isDeleted and data:post.allowNewComments'>
+                          <div class='reply-form-container' expr:id='"r" + data:comment.id'/>
+                        </b:if>
+
+                        <b:comment>=== Children ===</b:comment>
+                        <b:if cond='data:post.comments any (c => c.inReplyTo == data:comment.id)'>
+                          <ul class='comment-list-children'>
+                            <b:loop values='data:post.comments where (c => c.inReplyTo == data:comment.id)' var='reply'>
+                              <li expr:id='data:reply.anchorName'>
+
+                                <div class='comment-block'>
+                                  <b:class cond='data:reply.adminClass == data:post.adminClass' name='is-author'/>
+                                  <b:comment>=== Comment header ===</b:comment>
+                                  <div class='comment-header'>
+                                    <b:comment>=== Col 1 ===</b:comment>
+                                    <div class='comment-header-col-1'>
+                                      <b:comment>=== Comment avatar ===</b:comment>
+                                      <b:if cond='data:reply.authorPhoto'>
+                                        <img class='comment-avatar' expr:src='resizeImage(data:reply.authorAvatarSrc, 42)' expr:alt='data:comment.author'/>
+                                      <b:else/>
+                                        <svg class='comment-avatar' viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'>
+                                          <title>icon</title>
+                                          <path fill='#ff5722' d='M 4.4504803e-7,0 H 512 V 512 H 4.4504803e-7 Z'/>
+                                          <path fill='#ffffff' d='m 256.00001,255.99998 c 39.45313,0 71.42854,-27.97852 71.42854,-62.50001 C 327.42855,158.97848 295.4531,131 256.00001,131 c -39.45313,0 -71.42861,27.97848 -71.42861,62.49997 0,34.52149 31.97548,62.50001 71.42861,62.50001 z m 49.99998,15.62502 h -9.31919 c -12.38838,4.98044 -26.17186,7.81248 -40.68079,7.81248 -14.50896,0 -28.23662,-2.83204 -40.68083,-7.81248 H 206 c -41.40624,0 -75,29.39449 -75,65.625 v 20.31251 C 131,370.50195 142.99777,381 157.7857,381 H 354.21425 C 369.00225,381 381,370.50195 381,357.56251 V 337.25 c 0,-36.23051 -33.59374,-65.62504 -75.00001,-65.625 z'/>
+                                        </svg>
+                                      </b:if>
+                                    </div><!-- /.comment-header-col-1 -->
+                                    <b:comment>=== Col 2 ===</b:comment>
+                                    <div class='comment-header-col-2'>
+                                      <b:comment>=== Comment author ===</b:comment>
+                                      <div class='comment-author'>
+                                        <b:if cond='data:reply.authorUrl'>
+                                          <a expr:href='data:reply.authorUrl'><data:reply.author/></a>
+                                        <b:else/>
+                                          <data:reply.author/>
+                                        </b:if>
+                                        <b:comment>=== Comment author badge ===</b:comment>
+                                        <b:if cond='data:reply.adminClass == data:post.adminClass'>
+                                          <span class='comment-author-badge'>Author</span>
+                                        </b:if>
+                                      </div><!-- /.comment-author -->
+                                      <b:comment>=== Comment meta ===</b:comment>
+                                      <div class='comment-meta'>
+                                        <a expr:href='data:reply.url'>#</a>
+                                        <span><data:reply.timestamp/></span>
+                                      </div><!-- /.comment-meta -->
+                                    </div><!-- /.comment-header-col-2 -->
+                                  </div><!-- /.comment-header -->
+                                  <b:comment>=== Comment body ===</b:comment>
+                                  <div class='comment-body'>
+                                    <b:if cond='data:reply.isDeleted'>
+                                      <div class='comment-warning' role='alert'>
+                                        <data:reply.body/>
+                                      </div>
+                                    <b:else/>
+                                      <div class='comment-text'>
+                                        <data:reply.body/>
+                                      </div>
+                                    </b:if>
+                                  </div><!-- /.comment-body -->
+                                  <b:comment>=== Comment actions ===</b:comment>
+                                  <div class='comment-actions'>
+                                    <a expr:href='data:reply.deleteUrl'>Delete</a>
+                                  </div><!-- /.comment-actions -->
+                                </div><!-- /.comment-block -->
+
+                              </li>
+                            </b:loop>
+                          </ul><!-- /.comment-list-children -->
+                        </b:if>
+
+                      </li>
+                    </b:loop>
+                  </ol><!-- /.comment-list -->
+                </b:if>
+
+                <b:comment>=== Comment pagination ===</b:comment>
+                <b:if cond='data:post.commentPagingRequired'>
+                  <nav class='comment-pagination comment-block'>
+                    <div>
+                      <a expr:href='data:post.olderLinkUrl'><data:post.olderLinkText/></a>
+                      <a expr:href='data:post.oldestLinkUrl'><data:post.oldestLinkText/></a>
+                    </div>
+                    <span><data:post.commentRangeText/></span>
+                    <div>
+                      <a expr:href='data:post.newestLinkUrl'><data:post.newestLinkText/></a>
+                      <a expr:href='data:post.newerLinkUrl'><data:post.newerLinkText/></a>
+                    </div>
+                  </nav>
+                </b:if>
+
+                <b:comment>=== Comment form ===</b:comment>
+                <b:if cond='data:post.allowNewComments'>
+                  <div class='original-form-container' id='original-form-container'>
+                    <div class='comment-form comment-block' id='comment-form'>
+                      <h4 class='comment-form-title'><data:messages.postAComment/></h4>
+                      <b:if cond='data:this.messages.blogComment != ""'>
+                        <p class='comment-form-message'><data:this.messages.blogComment/></p>
+                      </b:if>
+                      <a expr:href='data:post.commentFormIframeSrc' id='comment-editor-src'/>
+                      <iframe class='blogger-iframe-colorize blogger-comment-from-post comment-editor' expr:height='data:cmtIframeInitialHeight ?: "90px"' id='comment-editor' name='comment-editor' src=''/>
+                      <data:post.cmtfpIframe/>
+                      <script>
+                        BLOG_CMT_createIframe(&#39;<data:post.appRpcRelayPath/>&#39;);
+                      </script>
+                      <a class='comment-cancel-reply' href='javascript:replyTo(0);'>Cancel</a>
+                    </div><!-- /.comment-form -->
+
+                    {% asset %}
+                    <script>
+                    //<![CDATA[
+                    var commentEditorSrc = document.getElementById('comment-editor').src.split('#');
+                    function replyTo(id) {
+                      var form = document.getElementById('comment-form');
+                      var iframe = document.getElementById('comment-editor');
+                      var replyFormContainer = document.getElementById('r' + id);
+                      var originalFormContainer = document.getElementById('original-form-container');
+                      var container = id ? replyFormContainer : originalFormContainer;
+                      var part = commentEditorSrc;
+
+                      container.insertBefore(form, null);
+                      iframe.src = id ? part[0] + '&parentID=' + id + '#' + part[1] : part[0] + '#' + part[1];
+                    }
+                    //]]>
+                    </script>
+                    {% endasset %}
+                  </div><!-- /.original-form-container -->
+                </b:if>
+
+              </div><!-- /.comments -->
+            </b:if><!-- /data:post.allowComments -->
+          </b:loop>
+        </div>
+      </b:if>
+
+
+    </b:includable>
+    {# Remove default inclusion #}
+    <b:includable id='aboutPostAuthor'/>
+    <b:includable id='addComments'/>
+    <b:includable id='commentAuthorAvatar'/>
+    <b:includable id='commentDeleteIcon'/>
+    <b:includable id='commentForm'/>
+    <b:includable id='commentFormIframeSrc'/>
+    <b:includable id='commentItem'/>
+    <b:includable id='commentList'/>
+    <b:includable id='commentPicker'/>
+    <b:includable id='comments'/>
+    <b:includable id='commentsTitle'/>
+    <b:includable id='feedLinks'/>
+    <b:includable id='feedLinksBody'/>
+    <b:includable id='homePageLink'/>
+    <b:includable id='iframeComments'/>
+    <b:includable id='inlineAd'/>
+    <b:includable id='nextPageLink'/>
+    <b:includable id='post'/>
+    <b:includable id='postBody'/>
+    <b:includable id='postBodySnippet'/>
+    <b:includable id='postCommentsAndAd'/>
+    <b:includable id='postCommentsLink'/>
+    <b:includable id='postFooter'/>
+    <b:includable id='postFooterAuthorProfile'/>
+    <b:includable id='postHeader'/>
+    <b:includable id='postMeta'/>
+    <b:includable id='postPagination'/>
+    <b:includable id='postTitle'/>
+    <b:includable id='previousPageLink'/>
+    <b:includable id='threadedCommentForm'/>
+    <b:includable id='threadedCommentJs'/>
+    <b:includable id='threadedComments'/>
+  </b:widget>
+</b:section>
+::endtemplate::
+
+::skin::
+/*
+=================================================
+Main
+=================================================
+*/
+
+/* POST LIST */
+.card-columns .card {
+  height: 460px;
+}
+
+/* POST PAGE CONTENT */
+.article-post {
+  margin-bottom: 1.5rem;
+}
+
+.article-post img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* Comments
+------------------------------------------------- */
+
+/*
+<Group description="(Main) Blog posts: Comments">
+  <Variable name="comments.padding"
+      description="Comments padding"
+      type="length"
+      min="0"
+      max="100px"
+      default="15px"
+      value="15px"/>
+
+  <Variable name="comments.background.color"
+      description="Comments background color"
+      type="color"
+      default="#fafafa"
+      value="#fafafa"/>
+  <Variable name="comments.border.width"
+      description="Comments border width"
+      type="length"
+      min="0"
+      max="100px"
+      default="1px"
+      value="1px"/>
+  <Variable name="comments.border.color"
+      description="Comments border color"
+      type="color"
+      default="#eeeeee"
+      value="#eeeeee"/>
+  <Variable name="comments.border.radius"
+      description="Comments border radius"
+      type="length"
+      min="0"
+      max="100px"
+      default="4px"
+      value="4px"/>
+
+  ----------------------
+
+  <Variable name="comments.title.font"
+      description="Comments title font"
+      type="font"
+      size="20px"
+      family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+      default="normal normal $(size) $(family)"
+      value="normal normal $(size) $(family)"/>
+  <Variable name="comments.title.color"
+      description="Comments title color"
+      type="color"
+      default="#212121"
+      value="#212121"/>
+
+  ----------------------
+
+  <Variable name="comment.block.margin"
+      description="Comment block margin"
+      type="length"
+      min="0"
+      max="100px"
+      default="15px"
+      value="15px"/>
+  <Variable name="comment.block.padding"
+      description="Comment block padding"
+      type="length"
+      min="0"
+      max="100px"
+      default="20px"
+      value="20px"/>
+
+  <Variable name="comment.block.color"
+      description="Comment block color"
+      type="color"
+      default="#212121"
+      value="#212121"/>
+
+  <Variable name="comment.block.background.color"
+      description="Comment block background color"
+      type="color"
+      default="#ffffff"
+      value="#ffffff"/>
+  <Variable name="comment.block.border.width"
+      description="Comment block border width"
+      type="length"
+      min="0"
+      max="100px"
+      default="1px"
+      value="1px"/>
+  <Variable name="comment.block.border.color"
+      description="Comment block border color"
+      type="color"
+      default="#dddddd"
+      value="#dddddd"/>
+  <Variable name="comment.block.border.radius"
+      description="Comment block border radius"
+      type="length"
+      min="0"
+      max="100px"
+      default="4px"
+      value="4px"/>
+
+  <Variable name="comment.block.link.color"
+      description="Comment block link color"
+      type="color"
+      default="$(link.color)"
+      value="$(link.color)"/>
+  <Variable name="comment.block.link.hover.color"
+      description="Comment block link hover color"
+      type="color"
+      default="$(link.hover.color)"
+      value="$(link.hover.color)"/>
+
+  ----------------------
+
+  <Variable name="comment.author.badge.color"
+      description="Comment author badge color"
+      type="color"
+      default="#ffffff"
+      value="#ffffff"/>
+
+  <Variable name="comment.author.badge.background.color"
+      description="Comment author badge background color"
+      type="color"
+      default="#222222"
+      value="#222222"/>
+  <Variable name="comment.author.badge.border.radius"
+      description="Comment author badge border radius"
+      type="length"
+      min="0"
+      max="100px"
+      default="4px"
+      value="4px"/>
+</Group>
+*/
+
+.comments {
+  margin-bottom: 20px;
+  padding: $(comments.padding);
+  background-color: $(comments.background.color);
+  border: $(comments.border.width) solid $(comments.border.color);
+  border-radius: $(comments.border.radius);
+}
+.comments:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * Comments title
+ */
+
+.comments-title {
+  margin-top: 0;
+  margin-bottom: $(comment.block.margin);
+  color: $(comments.title.color);
+  font-size: $(comments.title.font.size);
+  font-family: $(comments.title.font.family);
+}
+
+.comments-title small {
+  font-size: 80%;
+}
+
+/**
+ * Comment block
+ */
+
+.comment-block {
+  margin-top: $(comment.block.margin);
+  padding: $(comment.block.padding);
+  color: $(comment.block.color);
+  background-color: $(comment.block.background.color);
+  border: $(comment.block.border.width) solid $(comment.block.border.color);
+  border-radius: $(comment.block.border.radius);
+}
+
+.comment-block a {
+  color: $(comment.block.link.color);
+}
+.comment-block a:hover,
+.comment-block a:focus {
+  color: $(comment.block.link.hover.color);
+}
+
+/**
+ * Comment alert
+ */
+
+.comment-warning {
+  margin-top: $(comment.block.margin);
+  padding: 10px 15px;
+  color: #856404;
+  font-size: 16px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 4px;
+}
+
+.comment-body .comment-warning {
+  margin-top: 0;
+}
+
+/**
+ * Comment list
+ */
+
+.comment-list,
+.comment-list-children {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.comment-list-children > li {
+  margin-left: 30px;
+}
+
+/**
+ * Comment content
+ */
+
+/* === Comment header === */
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.comment-header-col-1 {
+  width: auto;
+  margin-right: 10px;
+}
+.comment-header-col-2 {
+  width: 100%;
+}
+
+/* Avatar */
+
+.comment-avatar {
+  width: 42px;
+  height: 42px;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+.comment-default-avatar {
+  overflow: hidden;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 42px;
+  text-align: center;
+  background-color: #ff5722;
+  user-select: none;
+}
+
+/* Author */
+
+.comment-author {
+  font-weight: 500;
+  font-size: 16px;
+}
+.comment-author .comment-author-badge {
+  position: relative;
+  top: -1px;
+  display: inline-block;
+  padding: 2px 4px;
+  color: $(comment.author.badge.color);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.2;
+  background-color: $(comment.author.badge.background.color);
+  border-radius: $(comment.author.badge.border.radius);
+}
+
+/* Meta */
+
+.comment-meta {
+  font-size: 14px;
+}
+
+/* === Comment body === */
+
+.comment-body {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+/* === Comment actions === */
+
+.comment-actions {
+  font-size: 14px;
+}
+
+/**
+ * Comment pagination
+ */
+
+.comment-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/**
+ * Comment form
+ */
+
+.comment-form-title,
+.comment-form-message {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.comment-form-title {
+  font-size: 20px;
+}
+.comment-form-message {
+  font-size: 16px;
+}
+
+.comment-editor {
+  width: 100%;
+  border: 0;
+}
+
+.comment-cancel-reply {
+  display: inline-block;
+  margin-top: 5px;
+}
+.original-form-container .comment-cancel-reply {
+  display: none;
+}
+
+
+/* Comment form Reply */
+.original-form-container .comment-form .comment-form-title{
+  display: inline-block;
+}
+.reply-form-container .comment-form{
+  margin-top: -30px;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+}
+.reply-form-container .comment-form .comment-form-title{
+  display: none;
+}
+
+
+/* Pager
+------------------------------------------------- */
+
+/*
+<Group description="(Main) Blog posts: Pager">
+  Pager link
+  ----------------------
+
+  <Variable name="pager.link.padding.y"
+      description="Pager link padding Y"
+      type="length"
+      min="0"
+      max="100px"
+      default="4px"
+      value="4px"/>
+  <Variable name="pager.link.padding.x"
+      description="Pager link padding X"
+      type="length"
+      min="0"
+      max="100px"
+      default="8px"
+      value="8px"/>
+  <Variable name="pager.link.color"
+      description="Pager link color"
+      type="color"
+      default="#555555"
+      value="#555555"/>
+  <Variable name="pager.link.hover.color"
+      description="Pager link hover color"
+      type="color"
+      default="#555555"
+      value="#555555"/>
+
+  <Variable name="pager.link.background.color"
+      description="Pager link background color"
+      type="color"
+      default="#ffffff"
+      value="#ffffff"/>
+  <Variable name="pager.link.hover.background.color"
+      description="Pager link hover background color"
+      type="color"
+      default="#f7f7f7"
+      value="#f7f7f7"/>
+  <Variable name="pager.link.border.width"
+      description="Pager link border width"
+      type="length"
+      min="0"
+      max="100px"
+      default="1px"
+      value="1px"/>
+  <Variable name="pager.link.border.color"
+      description="Pager link border color"
+      type="color"
+      default="#dddddd"
+      value="#dddddd"/>
+  <Variable name="pager.link.hover.border.color"
+      description="Pager link hover border color"
+      type="color"
+      default="#dddddd"
+      value="#dddddd"/>
+  <Variable name="pager.link.border.radius"
+      description="Pager link border radius"
+      type="length"
+      min="0"
+      max="100px"
+      default="4px"
+      value="4px"/>
+</Group>
+*/
+
+/**
+ * Pager base class
+ */
+
+.pager {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.pager:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * Pager link
+ */
+
+.pager-link {
+  position: relative;
+  display: block;
+  padding: $(pager.link.padding.y) $(pager.link.padding.x);
+  color: $(pager.link.color);
+  line-height: 1.25;
+  background-color: $(pager.link.background.color);
+  border: $(pager.link.border.width) solid $(pager.link.border.color);
+  border-radius: $(pager.link.border.radius);
+}
+.pager-link:hover,
+.pager-link:focus {
+  color: $(pager.link.hover.color);
+  text-decoration: none;
+  background-color: $(pager.link.hover.background.color);
+  border-color: $(pager.link.hover.border.color);
+}
+.pager-link.disabled {
+  opacity: .65;
+  pointer-events: none;
+}
+
+.pager-link.pager-home {
+  margin: 0 10px;
+}
+::endskin::

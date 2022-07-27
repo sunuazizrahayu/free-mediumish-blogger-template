@@ -1,0 +1,562 @@
+/*!
+ * PLEASE DON'T REMOVE THIS CREDIT
+ * -----------------------------------------------
+ * Original Themes Information: 
+ * Name          : Mediumish - A Medium style template by WowThemes.net
+ * URL           : https://www.wowthemes.net/mediumish-free-bootstrap-4-0-html-template-medium-styled/
+ * 
+ * Convert into Blogger Version:
+ * Name          : Mediumish Blogger Template
+ * Version       : 0.3.2
+ * Last Update   : 7 June 2020
+ * Init by       : Sunu Aziz Rahayu
+ * Theme URL     : https://github.com/sunuazizrahayu/free-mediumish-blogger-template
+ * Theme Preview : https://free-mediumish.blogspot.com/
+ * ----------------------------------------------- */
+
+/*
+=================================================
+Layout
+=================================================
+*/
+
+/* Skip navigation
+================================================= */
+
+/* Header
+================================================= */
+
+/* Content
+================================================= */
+
+/**
+ * Grid
+ */
+
+/* Footer
+================================================= */
+
+/*
+=================================================
+Footer
+=================================================
+*/
+
+/*
+=================================================
+Header
+=================================================
+*/
+
+/*
+=================================================
+Main
+=================================================
+*/
+
+/* POST LIST */
+
+.card-columns .card {
+  height: 460px;
+}
+
+/* POST PAGE CONTENT */
+
+.article-post {
+  margin-bottom: 1.5rem;
+}
+
+.article-post img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Comments
+------------------------------------------------- */
+
+/*
+<Group description="(Main) Blog posts: Comments">
+  <Variable name="comments.padding"
+      description="Comments padding"
+      type="length"
+      min="0"
+      max="100px"
+      default="15px"
+      value="15px"/>
+
+  <Variable name="comments.background.color"
+      description="Comments background color"
+      type="color"
+      default="#fafafa"
+      value="#fafafa"/>
+  <Variable name="comments.border.width"
+      description="Comments border width"
+      type="length"
+      min="0"
+      max="100px"
+      default="1px"
+      value="1px"/>
+  <Variable name="comments.border.color"
+      description="Comments border color"
+      type="color"
+      default="#eeeeee"
+      value="#eeeeee"/>
+  <Variable name="comments.border.radius"
+      description="Comments border radius"
+      type="length"
+      min="0"
+      max="100px"
+      default="4px"
+      value="4px"/>
+
+  ----------------------
+
+  <Variable name="comments.title.font"
+      description="Comments title font"
+      type="font"
+      size="20px"
+      family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+      default="normal normal $(size) $(family)"
+      value="normal normal $(size) $(family)"/>
+  <Variable name="comments.title.color"
+      description="Comments title color"
+      type="color"
+      default="#212121"
+      value="#212121"/>
+
+  ----------------------
+
+  <Variable name="comment.block.margin"
+      description="Comment block margin"
+      type="length"
+      min="0"
+      max="100px"
+      default="15px"
+      value="15px"/>
+  <Variable name="comment.block.padding"
+      description="Comment block padding"
+      type="length"
+      min="0"
+      max="100px"
+      default="20px"
+      value="20px"/>
+
+  <Variable name="comment.block.color"
+      description="Comment block color"
+      type="color"
+      default="#212121"
+      value="#212121"/>
+
+  <Variable name="comment.block.background.color"
+      description="Comment block background color"
+      type="color"
+      default="#ffffff"
+      value="#ffffff"/>
+  <Variable name="comment.block.border.width"
+      description="Comment block border width"
+      type="length"
+      min="0"
+      max="100px"
+      default="1px"
+      value="1px"/>
+  <Variable name="comment.block.border.color"
+      description="Comment block border color"
+      type="color"
+      default="#dddddd"
+      value="#dddddd"/>
+  <Variable name="comment.block.border.radius"
+      description="Comment block border radius"
+      type="length"
+      min="0"
+      max="100px"
+      default="4px"
+      value="4px"/>
+
+  <Variable name="comment.block.link.color"
+      description="Comment block link color"
+      type="color"
+      default="$(link.color)"
+      value="$(link.color)"/>
+  <Variable name="comment.block.link.hover.color"
+      description="Comment block link hover color"
+      type="color"
+      default="$(link.hover.color)"
+      value="$(link.hover.color)"/>
+
+  ----------------------
+
+  <Variable name="comment.author.badge.color"
+      description="Comment author badge color"
+      type="color"
+      default="#ffffff"
+      value="#ffffff"/>
+
+  <Variable name="comment.author.badge.background.color"
+      description="Comment author badge background color"
+      type="color"
+      default="#222222"
+      value="#222222"/>
+  <Variable name="comment.author.badge.border.radius"
+      description="Comment author badge border radius"
+      type="length"
+      min="0"
+      max="100px"
+      default="4px"
+      value="4px"/>
+</Group>
+*/
+
+.comments {
+  margin-bottom: 20px;
+  padding: $(comments.padding);
+  background-color: $(comments.background.color);
+  border: $(comments.border.width) solid $(comments.border.color);
+  border-radius: $(comments.border.radius);
+}
+
+.comments:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * Comments title
+ */
+
+.comments-title {
+  margin-top: 0;
+  margin-bottom: $(comment.block.margin);
+  color: $(comments.title.color);
+  font-size: $(comments.title.font.size);
+  font-family: $(comments.title.font.family);
+}
+
+.comments-title small {
+  font-size: 80%;
+}
+
+/**
+ * Comment block
+ */
+
+.comment-block {
+  margin-top: $(comment.block.margin);
+  padding: $(comment.block.padding);
+  color: $(comment.block.color);
+  background-color: $(comment.block.background.color);
+  border: $(comment.block.border.width) solid $(comment.block.border.color);
+  border-radius: $(comment.block.border.radius);
+}
+
+.comment-block a {
+  color: $(comment.block.link.color);
+}
+
+.comment-block a:hover,
+.comment-block a:focus {
+  color: $(comment.block.link.hover.color);
+}
+
+/**
+ * Comment alert
+ */
+
+.comment-warning {
+  margin-top: $(comment.block.margin);
+  padding: 10px 15px;
+  color: #856404;
+  font-size: 16px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 4px;
+}
+
+.comment-body .comment-warning {
+  margin-top: 0;
+}
+
+/**
+ * Comment list
+ */
+
+.comment-list,
+.comment-list-children {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.comment-list-children > li {
+  margin-left: 30px;
+}
+
+/**
+ * Comment content
+ */
+
+/* === Comment header === */
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.comment-header-col-1 {
+  width: auto;
+  margin-right: 10px;
+}
+
+.comment-header-col-2 {
+  width: 100%;
+}
+
+/* Avatar */
+
+.comment-avatar {
+  width: 42px;
+  height: 42px;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.comment-default-avatar {
+  overflow: hidden;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 42px;
+  text-align: center;
+  background-color: #ff5722;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Author */
+
+.comment-author {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.comment-author .comment-author-badge {
+  position: relative;
+  top: -1px;
+  display: inline-block;
+  padding: 2px 4px;
+  color: $(comment.author.badge.color);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.2;
+  background-color: $(comment.author.badge.background.color);
+  border-radius: $(comment.author.badge.border.radius);
+}
+
+/* Meta */
+
+.comment-meta {
+  font-size: 14px;
+}
+
+/* === Comment body === */
+
+.comment-body {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+/* === Comment actions === */
+
+.comment-actions {
+  font-size: 14px;
+}
+
+/**
+ * Comment pagination
+ */
+
+.comment-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/**
+ * Comment form
+ */
+
+.comment-form-title,
+.comment-form-message {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.comment-form-title {
+  font-size: 20px;
+}
+
+.comment-form-message {
+  font-size: 16px;
+}
+
+.comment-editor {
+  width: 100%;
+  border: 0;
+}
+
+.comment-cancel-reply {
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.original-form-container .comment-cancel-reply {
+  display: none;
+}
+
+/* Comment form Reply */
+
+.original-form-container .comment-form .comment-form-title{
+  display: inline-block;
+}
+
+.reply-form-container .comment-form{
+  margin-top: -30px;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+}
+
+.reply-form-container .comment-form .comment-form-title{
+  display: none;
+}
+
+/* Pager
+------------------------------------------------- */
+
+/*
+<Group description="(Main) Blog posts: Pager">
+  Pager link
+  ----------------------
+
+  <Variable name="pager.link.padding.y"
+      description="Pager link padding Y"
+      type="length"
+      min="0"
+      max="100px"
+      default="4px"
+      value="4px"/>
+  <Variable name="pager.link.padding.x"
+      description="Pager link padding X"
+      type="length"
+      min="0"
+      max="100px"
+      default="8px"
+      value="8px"/>
+  <Variable name="pager.link.color"
+      description="Pager link color"
+      type="color"
+      default="#555555"
+      value="#555555"/>
+  <Variable name="pager.link.hover.color"
+      description="Pager link hover color"
+      type="color"
+      default="#555555"
+      value="#555555"/>
+
+  <Variable name="pager.link.background.color"
+      description="Pager link background color"
+      type="color"
+      default="#ffffff"
+      value="#ffffff"/>
+  <Variable name="pager.link.hover.background.color"
+      description="Pager link hover background color"
+      type="color"
+      default="#f7f7f7"
+      value="#f7f7f7"/>
+  <Variable name="pager.link.border.width"
+      description="Pager link border width"
+      type="length"
+      min="0"
+      max="100px"
+      default="1px"
+      value="1px"/>
+  <Variable name="pager.link.border.color"
+      description="Pager link border color"
+      type="color"
+      default="#dddddd"
+      value="#dddddd"/>
+  <Variable name="pager.link.hover.border.color"
+      description="Pager link hover border color"
+      type="color"
+      default="#dddddd"
+      value="#dddddd"/>
+  <Variable name="pager.link.border.radius"
+      description="Pager link border radius"
+      type="length"
+      min="0"
+      max="100px"
+      default="4px"
+      value="4px"/>
+</Group>
+*/
+
+/**
+ * Pager base class
+ */
+
+.pager {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.pager:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * Pager link
+ */
+
+.pager-link {
+  position: relative;
+  display: block;
+  padding: $(pager.link.padding.y) $(pager.link.padding.x);
+  color: $(pager.link.color);
+  line-height: 1.25;
+  background-color: $(pager.link.background.color);
+  border: $(pager.link.border.width) solid $(pager.link.border.color);
+  border-radius: $(pager.link.border.radius);
+}
+
+.pager-link:hover,
+.pager-link:focus {
+  color: $(pager.link.hover.color);
+  text-decoration: none;
+  background-color: $(pager.link.hover.background.color);
+  border-color: $(pager.link.hover.border.color);
+}
+
+.pager-link.disabled {
+  opacity: .65;
+  pointer-events: none;
+}
+
+.pager-link.pager-home {
+  margin: 0 10px;
+}
+
+/*
+=================================================
+Sidebar
+=================================================
+*/
+
+/*
+=================================================
+Feature
+=================================================
+*/
